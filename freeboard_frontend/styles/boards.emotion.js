@@ -65,83 +65,75 @@ export const Content = styled.textarea`
     height: 480px;
     font-size: 16px;
     font-weight: 500;
-    padding: 16px;
-    border: 1px solid #bdbdbd;
-`;
-/*
-export const Subject = styled.input`
-    width: 996px;
-    height: 52px;
     padding-left: 16px;
+    padding-top: 16px;
     border: 1px solid #bdbdbd;
-`;
-*/
-/*
-export const Content = styled.textarea`
-    width: 1183px;
-    height: 480px;
-    padding-left: 16px;
-    padding: 14px;
-    border: 1px solid #bdbdbd;
-`;
-export const ZipcodeWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
 `;
 
-export const Zipcode = styled.input`
+export const FindMail = styled.div`
+    width: 100%;
+`;
+
+export const Post = styled.input`
     width: 77px;
-    height: 52px;
-    padding-left: 16px;
+    height: 30px;
+    padding-left: 50px;
     border: 1px solid #bdbdbd;
 `;
 
 export const SearchButton = styled.button`
-    width: 124px;
-    height: 52px;
-    margin-left: 16px;
-    background-color: black;
-    cursor: pointer;
+    width: 120px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: 500;
     color: white;
+    border: 1px solid #bdbdbd;
+    background: black;
+    margin-left: 16px;
+    cursor: pointer;
 `;
 
-export const Address = styled.input`
-    width: 996px;
+export const Adress = styled.input`
+    width: 1183px;
     height: 52px;
-    margin-top: 16px;
     padding-left: 16px;
+    margin-top: 16px;
     border: 1px solid #bdbdbd;
+    font-size: 16px;
+    font-weight: 500;
 `;
 
 export const Youtube = styled.input`
-    width: 996px;
+    width: 1183px;
     height: 52px;
     padding-left: 16px;
     border: 1px solid #bdbdbd;
 `;
 
 export const ImageWrapper = styled.div`
-    width: 996px;
+    width: 1200px;
+    /* padding-left: 16px; */
     padding-top: 40px;
 `;
 
 export const UploadButton = styled.button`
     width: 78px;
     height: 78px;
-    background-color: #bdbdbd;
+    background: #bdbdbd;
+    font-size: 17px;
     margin-right: 24px;
-    outline: none;
     border: none;
-    cursor: pointer;
+    color: #4f4f4f;
 `;
 
 export const OptionWrapper = styled.div`
-    width: 996px;
+    width: 1200px;
     padding-top: 40px;
 `;
 
 export const RadioButton = styled.input`
     cursor: pointer;
+    background: #ffd600;
 `;
 
 export const RadioLabel = styled.label`
@@ -158,18 +150,6 @@ export const ButtonWrapper = styled.div`
     padding-top: 80px;
 `;
 
-export const CancelButton = styled.button`
-    width: 179px;
-    height: 52px;
-    background-color: #bdbdbd;
-    border: none;
-    font-size: 16px;
-    font-weight: 500;
-    margin-left: 12px;
-    margin-right: 12px;
-    cursor: pointer;
-`;
-
 export const SubmitButton = styled.button`
     width: 179px;
     height: 52px;
@@ -182,9 +162,3 @@ export const SubmitButton = styled.button`
 
     background-color: yellow;
 `;
-
-export const Error = styled.div`
-    padding-top: 10px;
-    font-size: 14px;
-    color: red;
-`; */
