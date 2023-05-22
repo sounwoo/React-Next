@@ -91,10 +91,12 @@ export default function BoardsCreatePage() {
         if (name && password && subject && content) {
             const result = await createBoard({
                 variables: {
-                    title: subject,
-                    content,
-                    password,
-                    writer: name,
+                    createBoardInput: {
+                        title: subject,
+                        content,
+                        password,
+                        writer: name,
+                    },
                 },
             });
             console.log(result);
