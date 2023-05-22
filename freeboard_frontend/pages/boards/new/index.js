@@ -1,3 +1,4 @@
+import { useMutation, gql } from '@apollo/client';
 import {
     Wrapper,
     Title,
@@ -24,6 +25,14 @@ import {
 } from '../../../styles/boards.emotion';
 import { useState } from 'react';
 
+const CREATE_BOARD = gql`
+    mutation createBoard($createBoard: CreateBoardInput!) {
+        createBoard(createBoardInput: $createBoardInput) {
+            _id
+        }
+    }
+`;
+
 export default function BoardsCreatePage() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -38,6 +47,8 @@ export default function BoardsCreatePage() {
     const [contentError, setContentError] = useState('');
     const [youtubeError, setYoutubeError] = useState('');
     const [adressError, setAdressError] = useState('');
+
+    const [createBoard] = useMutation(CREATE_BOARD);
 
     function onChangeName(event) {
         const { value } = event.target;
@@ -69,7 +80,7 @@ export default function BoardsCreatePage() {
         setAdress(value);
     }
 
-    function onClickCreate() {
+    async function onClickCreate() {
         !name ? setNameError('이름을 입력해 주세요') : setNameError('');
         !password ? setPasswordError('비밀번호를 입력해 주세요') : setPasswordError('');
         !subject ? setSubjectError('제목을 입력해 주세요') : setSubjectError('');
@@ -77,7 +88,17 @@ export default function BoardsCreatePage() {
         !youtube ? setYoutubeError('Youtube링크를 입력해 주세요') : setYoutubeError('');
         !adress ? setAdressError('주소를 입력해 주세요') : setAdressError('');
 
-        alert('게시물 작성 완료');
+        if (name && password && subject && content) {
+            const result = await createBoard({
+                variables: {
+                    title: subject,
+                    content,
+                    password,
+                    writer: name,
+                },
+            });
+            console.log(result);
+        }
     }
 
     return (
