@@ -34,27 +34,25 @@ export default function BoardDetailPage() {
     });
 
     return (
-        <>
-            <Wrapper>
-                <CardWrapper>
-                    <Header>
-                        <Avatar src="/images/avatar.png" />
-                        <Info>
-                            <Writer>{data?.fetchBoard?.writer}</Writer>
-                            <CreateAt>Date : {data?.fetchBoard?.createdAt}</CreateAt>
-                        </Info>
-                    </Header>
-                    <Body>
-                        <Title> {data?.fetchBoard?.title} </Title>
-                        <Content>{data?.fetchBoard?.contents}</Content>
-                    </Body>
-                </CardWrapper>
-                <BottomWrapper>
-                    <Button>목록으로</Button>
-                    <Button>수정하기</Button>
-                    <Button>삭제하기</Button>
-                </BottomWrapper>
-            </Wrapper>
-        </>
+        <Wrapper>
+            <CardWrapper>
+                <Header>
+                    <Avatar src="/images/avatar.png" />
+                    <Info>
+                        <Writer>{data?.fetchBoard?.writer}</Writer>
+                        <CreateAt>Date : {data?.fetchBoard?.createdAt}</CreateAt>
+                    </Info>
+                </Header>
+                <Body>
+                    <Title> {data?.fetchBoard?.title} </Title>
+                    <Content>{data?.fetchBoard?.contents}</Content>
+                </Body>
+            </CardWrapper>
+            <BottomWrapper>
+                <Button>목록으로</Button>
+                <Button>수정하기</Button>
+                <Button>삭제하기</Button>
+            </BottomWrapper>
+        </Wrapper>
     );
 }

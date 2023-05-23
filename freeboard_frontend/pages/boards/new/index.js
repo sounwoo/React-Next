@@ -24,9 +24,10 @@ import {
     Error,
 } from '../../../styles/boards.emotion';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 const CREATE_BOARD = gql`
-    mutation createBoard($createBoard: CreateBoardInput!) {
+    mutation createBoard($createBoardInput: CreateBoardInput!) {
         createBoard(createBoardInput: $createBoardInput) {
             _id
         }
@@ -34,25 +35,27 @@ const CREATE_BOARD = gql`
 `;
 
 export default function BoardsCreatePage() {
-    const [name, setName] = useState('');
+    const router = useRouter();
+
+    const [writer, setwriter] = useState('');
     const [password, setPassword] = useState('');
-    const [subject, setSubject] = useState('');
-    const [content, setContent] = useState('');
+    const [title, setTitle] = useState('');
+    const [contents, setContents] = useState('');
     const [youtube, setYoutube] = useState('');
     const [adress, setAdress] = useState('');
 
-    const [nameError, setNameError] = useState('');
+    const [writerError, setwriterError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [subjectError, setSubjectError] = useState('');
-    const [contentError, setContentError] = useState('');
+    const [titleError, setTitleError] = useState('');
+    const [contentsError, setContentsError] = useState('');
     const [youtubeError, setYoutubeError] = useState('');
     const [adressError, setAdressError] = useState('');
 
     const [createBoard] = useMutation(CREATE_BOARD);
 
-    function onChangeName(event) {
+    function onChangewriter(event) {
         const { value } = event.target;
-        setName(value);
+        setwriter(value);
     }
 
     function onChangePassword(event) {
@@ -60,14 +63,14 @@ export default function BoardsCreatePage() {
         setPassword(value);
     }
 
-    function onChangeSubject(event) {
+    function onChangeTitle(event) {
         const { value } = event.target;
-        setSubject(value);
+        setTitle(value);
     }
 
-    function onChangeContent(event) {
+    function onChangeContents(event) {
         const { value } = event.target;
-        setContent(value);
+        setContents(value);
     }
 
     function onChangeYoutube(event) {
@@ -81,25 +84,29 @@ export default function BoardsCreatePage() {
     }
 
     async function onClickCreate() {
-        !name ? setNameError('이름을 입력해 주세요') : setNameError('');
+        !writer ? setwriterError('이름을 입력해 주세요') : setwriterError('');
         !password ? setPasswordError('비밀번호를 입력해 주세요') : setPasswordError('');
-        !subject ? setSubjectError('제목을 입력해 주세요') : setSubjectError('');
-        !content ? setContentError('내용을 입력해 주세요') : setContentError('');
-        !youtube ? setYoutubeError('Youtube링크를 입력해 주세요') : setYoutubeError('');
-        !adress ? setAdressError('주소를 입력해 주세요') : setAdressError('');
+        !title ? setTitleError('제목을 입력해 주세요') : setTitleError('');
+        !contents ? setContentsError('내용을 입력해 주세요') : setContentsError('');
+        // !youtube ? setYoutubeError('Youtube링크를 입력해 주세요') : setYoutubeError('');
+        // !adress ? setAdressError('주소를 입력해 주세요') : setAdressError('');
 
-        if (name && password && subject && content) {
-            const result = await createBoard({
-                variables: {
-                    createBoardInput: {
-                        title: subject,
-                        content,
-                        password,
-                        writer: name,
+        if (writer && password && subject && content) {
+            try {
+                const result = await createBoard({
+                    variables: {
+                        createBoardInput: {
+                            title,
+                            contents,
+                            password,
+                            writer,
+                        },
                     },
-                },
-            });
-            console.log(result);
+                });
+                router.push(`/boards/${result.data.createBoard._id}`);
+            } catch (error) {
+                alert(error.message);
+            }
         }
     }
 
@@ -112,9 +119,9 @@ export default function BoardsCreatePage() {
                     <Writer
                         type="text"
                         placeholder="이름을 적어주세요."
-                        onChange={onChangeName}
+                        onChange={onChangewriter}
                     />
-                    <Error>{nameError}</Error>
+                    <Error>{writerError}</Error>
                 </InputWrapper>
                 <InputWrapper>
                     <Label>비밀번호</Label>
@@ -131,14 +138,14 @@ export default function BoardsCreatePage() {
                 <Subject
                     type="text"
                     placeholder="제목을 작성해 주세요"
-                    onChange={onChangeSubject}
+                    onChange={onChangeTitle}
                 />
-                <Error>{subjectError}</Error>
+                <Error>{titleError}</Error>
             </InputWrapper>
             <InputWrapper>
                 <Label>내용</Label>
-                <Content placeholder="내용을 입력해 주세요" onChange={onChangeContent} />
-                <Error>{contentError}</Error>
+                <Content placeholder="내용을 입력해 주세요" onChange={onChangeContents} />
+                <Error>{contentsError}</Error>
             </InputWrapper>
             <InputWrapper>
                 <Label>주소</Label>
@@ -167,9 +174,9 @@ export default function BoardsCreatePage() {
             </ImageWrapper>
             <OptionWrapper>
                 <Label>메인설정</Label>
-                <RadioButton type="radio" id="youtube" name="radio-button" />
+                <RadioButton type="radio" id="youtube" writer="radio-button" />
                 <RadioLabel htmlFor="youtube">유튜브</RadioLabel>
-                <RadioButton type="radio" id="image" name="radio-button" />
+                <RadioButton type="radio" id="image" writer="radio-button" />
                 <RadioLabel htmlFor="image">사진</RadioLabel>
             </OptionWrapper>
             <ButtonWrapper>

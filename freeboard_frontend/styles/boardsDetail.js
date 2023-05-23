@@ -43,7 +43,6 @@ export const CreateAt = styled.div``;
 export const Body = styled.div`
     width: 100%;
     margin-top: 80px;
-    /* background: red; */
 `;
 export const Title = styled.h1``;
 
