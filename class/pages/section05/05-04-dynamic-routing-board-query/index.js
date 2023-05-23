@@ -4,15 +4,15 @@ export default function StaticRoutingPage() {
     const roter = useRouter();
 
     const onClickMove1 = () => {
-        roter.push('/05-04-static-routed-board/1');
+        roter.push('/section05/05-04-dynamic-routing-board-query-moved/3704');
     };
 
     const onClickMove2 = () => {
-        roter.push('/05-04-static-routed-board/2');
+        roter.push('/section05/05-04-dynamic-routing-board-query-moved/2');
     };
 
     const onClickMove3 = () => {
-        roter.push('/05-04-static-routed-board/3');
+        roter.push('/section05/05-04-dynamic-routing-board-query-moved/3');
     };
 
     return (

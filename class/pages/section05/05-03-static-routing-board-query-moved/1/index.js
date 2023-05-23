@@ -10,9 +10,9 @@ const FETCH_BOARD = gql`
     }
 `;
 
-export default function StaticRoutedPage() {
+export default function StaticRoutingMovedPage() {
     const { data } = useQuery(FETCH_BOARD, {
-        variables: { number: 3703 },
+        variables: { number: 3704 },
     });
     console.log(data);
 
