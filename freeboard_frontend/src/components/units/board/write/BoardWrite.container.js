@@ -7,6 +7,7 @@ import { useMutation } from '@apollo/client';
 export default function BoardWrite() {
     const router = useRouter();
 
+    const [isActive, setIsActive] = useState(false);
     const [writer, setwriter] = useState('');
     const [password, setPassword] = useState('');
     const [title, setTitle] = useState('');
@@ -26,21 +27,25 @@ export default function BoardWrite() {
     function onChangeWriter(event) {
         const { value } = event.target;
         setwriter(value);
+        if (value && password && title && contents) setIsActive(true);
     }
 
     function onChangePassword(event) {
         const { value } = event.target;
         setPassword(value);
+        if (writer && value && title && contents) setIsActive(true);
     }
 
     function onChangeTitle(event) {
         const { value } = event.target;
         setTitle(value);
+        if (writer && password && value && contents) setIsActive(true);
     }
 
     function onChangeContents(event) {
         const { value } = event.target;
         setContents(value);
+        if (writer && password && title && value) setIsActive(true);
     }
 
     function onChangeYoutube(event) {
@@ -95,6 +100,7 @@ export default function BoardWrite() {
             onClickSubmit={onClickSubmit}
             onChangeYoutube={onChangeYoutube}
             onChangeAddress={onChangeAddress}
+            isActive={isActive}
         />
     );
 }
