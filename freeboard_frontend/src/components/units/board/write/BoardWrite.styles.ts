@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { IRadiobutton } from './BoardWrite.types';
+import { ISubmitButtonProps } from './BoardWrite.types';
 
 export const Wrapper = styled.div`
     width: 1200px;
@@ -132,7 +132,7 @@ export const OptionWrapper = styled.div`
     padding-top: 40px;
 `;
 
-export const RadioButton = styled.input<IRadiobutton>`
+export const RadioButton = styled.input`
     cursor: pointer;
     background: #ffd600;
 `;
@@ -161,8 +161,8 @@ export const SubmitButton = styled.button`
     margin-right: 12px;
     cursor: pointer;
 
-    background-color: ${(props: { isActive: boolean }) =>
-        props.isActive ? 'yellow' : ''};
+    background-color: ${(props: ISubmitButtonProps) =>
+        props.isActive ? 'yellow' : 'none'};
 `;
 
 export const UpdateButton = styled.button`

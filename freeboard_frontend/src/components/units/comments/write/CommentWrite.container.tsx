@@ -34,14 +34,14 @@ export default function CommentWrite() {
     };
 
     const onClickSubmit = async () => {
-        if (!writer) alert('작성자를 입력해주세요.');
-        if (!password) alert('비밀번호를 입력해주세요.');
-        if (!contents) alert('내용을 입력해 주세요.');
-        console.log(writer, password, contents, router.query);
+        if (!writer) return alert('작성자를 입력해주세요.');
+        if (!password) return alert('비밀번호를 입력해주세요.');
+        if (!contents) return alert('내용을 입력해 주세요.');
         try {
+            if (!router || typeof router.query.boardId !== 'string') return <></>;
             await createBoardComment({
                 variables: {
-                    boardId: String(router.query.boardId),
+                    boardId: router.query.boardId,
                     createBoardCommentInput: {
                         writer,
                         password,
@@ -58,7 +58,7 @@ export default function CommentWrite() {
             });
             router.push(`/boards/${router.query.boardId}`);
         } catch (error) {
-            alert(error.message);
+            if (error instanceof Error) alert(error.message);
         }
     };
 
@@ -68,6 +68,7 @@ export default function CommentWrite() {
             onChangePassword={onChangePassword}
             onChangeContents={onChangeContents}
             onClickSubmit={onClickSubmit}
+            contents={contents}
         />
     );
 }

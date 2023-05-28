@@ -11,7 +11,7 @@ export const Warpper = styled.div`
 export const Avatar = styled.img``;
 
 export const Writer = styled.div`
-    margin-right: 18px;
+    width: 15%;
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
@@ -40,8 +40,6 @@ export const Comment = styled.div`
 `;
 
 export const CreatedAt = styled.div`
-    margin-top: 10px;
-    margin-left: 64px;
     font-weight: 400;
     font-size: 12px;
     line-height: 18px;
@@ -51,8 +49,40 @@ export const CreatedAt = styled.div`
 export const ItemWarpper = styled.div`
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 `;
 
 export const Star = styled.div`
-    margin-right: 10px;
+    margin-left: 15px;
+`;
+
+export const DeleteButton = styled.img`
+    cursor: pointer;
+    margin-left: 10px;
+
+    :hover {
+        filter: opacity(0.5) drop-shadow(0 0 0 #000033);
+    }
+`;
+export const EditButton = styled.img`
+    cursor: pointer;
+
+    :hover {
+        filter: opacity(0.5) drop-shadow(0 0 0 #000033);
+    }
+`;
+
+export const Option = styled.div`
+    height: 16px;
+    display: flex;
+    flex-direction: row;
+`;
+
+export const Bottom = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 64px;
 `;

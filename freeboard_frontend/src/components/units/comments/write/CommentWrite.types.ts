@@ -5,4 +5,5 @@ export interface CommentWrtieUIProps {
     onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
     onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
     onClickSubmit: (event: MouseEvent<HTMLButtonElement>) => void;
+    contents: string;
 }

@@ -12,12 +12,22 @@ export default function CommentListUI(props: CommentListUIProps) {
                         <S.Item>
                             <S.ItemWarpper>
                                 <S.Writer>{el.writer}</S.Writer>
-                                <S.Star>{el.rating}</S.Star>
+                                <S.Option>
+                                    <S.EditButton src="/images/option/option_edit_icon.png" />
+                                    <S.DeleteButton
+                                        id={el._id}
+                                        src="/images/option/option_delete_icon.png"
+                                        onClick={props.onClickCommentDelete}
+                                    />
+                                </S.Option>
                             </S.ItemWarpper>
                             <S.Comment>{el.contents}</S.Comment>
                         </S.Item>
                     </S.Info>
-                    <S.CreatedAt>{getDate(el.createdAt)}</S.CreatedAt>
+                    <S.Bottom>
+                        <S.CreatedAt>{getDate(el.createdAt)}</S.CreatedAt>
+                        <S.Star>{el.rating}</S.Star>
+                    </S.Bottom>
                 </S.Warpper>
             ))}
         </div>

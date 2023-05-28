@@ -10,6 +10,7 @@ import {
     IMutationUpdateBoardArgs,
     IUpdateBoardInput,
 } from '../../../../commons/types/generated/types';
+import { type } from 'os';
 
 export default function BoardWrite(props: IBoardWriteProps) {
     const router = useRouter();
@@ -105,9 +106,13 @@ export default function BoardWrite(props: IBoardWriteProps) {
         if (contents) updateBoardInput.contents = contents;
 
         try {
+            if (typeof router.query.boardId !== 'string') {
+                alert('시스템에 문제가 있습니다.');
+                return;
+            }
             const result = await updateBoard({
                 variables: {
-                    boardId: String(router.query.boardId),
+                    boardId: router.query.boardId,
                     password,
                     updateBoardInput,
                 },
@@ -115,7 +120,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
             router.push(`/boards/${result.data.updateBoard._id}`);
         } catch (error) {
-            alert(error.message);
+            if (error instanceof Error) alert(error.message);
         }
     };
 

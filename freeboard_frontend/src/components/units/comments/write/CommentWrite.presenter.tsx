@@ -27,7 +27,7 @@ export default function CommentWriteUI(props: CommentWrtieUIProps) {
                     onChange={props.onChangeContents}
                 ></S.Contents>
                 <S.BottomWrapper>
-                    <S.ContentsLength>/100</S.ContentsLength>
+                    <S.ContentsLength>{props.contents.length}/100</S.ContentsLength>
                     <S.Button onClick={props.onClickSubmit}>등록하기</S.Button>
                 </S.BottomWrapper>
             </S.ContentsWrapper>

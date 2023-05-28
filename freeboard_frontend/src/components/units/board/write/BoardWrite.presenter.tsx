@@ -13,7 +13,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                         placeholder="이름을 적어주세요."
                         onChange={props.onChangeWriter}
                         defaultValue={props.data?.fetchBoard.writer}
-                        readOnly={props.data?.fetchBoard.writer}
+                        readOnly={!!props.data?.fetchBoard.writer}
                     />
                     <s.Error>{props.writerError}</s.Error>
                 </s.InputWrapper>
@@ -73,9 +73,9 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
             </s.ImageWrapper>
             <s.OptionWrapper>
                 <s.Label>메인설정</s.Label>
-                <s.RadioButton type="radio" id="youtube" writer="radio-button" />
+                <s.RadioButton type="radio" id="youtube" name="radio-button" />
                 <s.RadioLabel htmlFor="youtube">유튜브</s.RadioLabel>
-                <s.RadioButton type="radio" id="image" writer="radio-button" />
+                <s.RadioButton type="radio" id="image" name="radio-button" />
                 <s.RadioLabel htmlFor="image">사진</s.RadioLabel>
             </s.OptionWrapper>
             <s.ButtonWrapper>
