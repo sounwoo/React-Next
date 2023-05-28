@@ -3,7 +3,7 @@ import * as s from './BoardWrite.styles';
 export default function BoardWriteUI(props) {
     return (
         <s.Wrapper>
-            <s.Title>게시물 등록</s.Title>
+            <s.Title>게시물 {props.isEdit ? '수정' : '등록'}</s.Title>
             <s.WriterWrapper>
                 <s.InputWrapper>
                     <s.Label>작성자</s.Label>
@@ -11,6 +11,7 @@ export default function BoardWriteUI(props) {
                         type="text"
                         placeholder="이름을 적어주세요."
                         onChange={props.onChangeWriter}
+                        defaultValue={props.data?.fetchBoard.writer}
                     />
                     <s.Error>{props.writerError}</s.Error>
                 </s.InputWrapper>
@@ -30,6 +31,7 @@ export default function BoardWriteUI(props) {
                     type="text"
                     placeholder="제목을 작성해 주세요"
                     onChange={props.onChangeTitle}
+                    defaultValue={props.data?.fetchBoard.title}
                 />
                 <s.Error>{props.titleError}</s.Error>
             </s.InputWrapper>
@@ -38,6 +40,7 @@ export default function BoardWriteUI(props) {
                 <s.Content
                     placeholder="내용을 입력해 주세요"
                     onChange={props.onChangeContents}
+                    defaultValue={props.data?.fetchBoard.contents}
                 />
                 <s.Error>{props.contentsError}</s.Error>
             </s.InputWrapper>
@@ -74,9 +77,21 @@ export default function BoardWriteUI(props) {
                 <s.RadioLabel htmlFor="image">사진</s.RadioLabel>
             </s.OptionWrapper>
             <s.ButtonWrapper>
-                <s.SubmitButton onClick={props.onClickSubmit} isActive={props.isActive}>
-                    등록하기
-                </s.SubmitButton>
+                {props.isEdit ? (
+                    <>
+                        <s.SubmitButton> 취소하기</s.SubmitButton>
+                        <s.UpdateButton onClick={props.onClickUpdate}>
+                            수정하기
+                        </s.UpdateButton>
+                    </>
+                ) : (
+                    <s.SubmitButton
+                        onClick={props.onClickSubmit}
+                        isActive={props.isActive}
+                    >
+                        등록하기
+                    </s.SubmitButton>
+                )}
             </s.ButtonWrapper>
         </s.Wrapper>
     );

@@ -9,5 +9,9 @@ export default function BoardDetail() {
         variables: { boardId: router.query.boardId },
     });
 
-    return <BoardDetailUI data={data} />;
+    const onClickMove = () => {
+        router.push(`/boards/${data.fetchBoard._id}/edit`);
+    };
+
+    return <BoardDetailUI data={data} onClickMove={onClickMove} />;
 }

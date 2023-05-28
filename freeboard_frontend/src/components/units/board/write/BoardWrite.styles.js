@@ -163,6 +163,19 @@ export const SubmitButton = styled.button`
     background-color: ${(props) => (props.isActive ? 'yellow' : '')};
 `;
 
+export const UpdateButton = styled.button`
+    width: 179px;
+    height: 52px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 12px;
+    margin-right: 12px;
+    cursor: pointer;
+
+    background-color: yellow;
+`;
+
 export const Error = styled.div`
     padding-top: 10px;
     font-size: 14px;

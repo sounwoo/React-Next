@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 export const Wrapper = styled.div`
     width: 1200px;
     margin: 80px;
+    margin-bottom: 40px;
 `;
 
 export const Header = styled.div`
@@ -60,6 +61,8 @@ export const BottomWrapper = styled.div`
     flex-direction: row;
     justify-content: center;
     padding-top: 80px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #bdbdbd;
 `;
 
 export const Button = styled.button`
