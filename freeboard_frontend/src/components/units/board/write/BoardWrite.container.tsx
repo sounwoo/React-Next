@@ -1,60 +1,73 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import BoardWriteUI from './BoardWrite.presenter';
 import { CREATE_BOARD, UPDATE_BOARD } from './BoardWrite.queries';
 import { useMutation } from '@apollo/client';
+import { IBoardWriteProps } from './BoardWrite.types';
+import {
+    IMutation,
+    IMutationCreateBoardArgs,
+    IMutationUpdateBoardArgs,
+    IUpdateBoardInput,
+} from '../../../../commons/types/generated/types';
 
-export default function BoardWrite(props) {
+export default function BoardWrite(props: IBoardWriteProps) {
     const router = useRouter();
 
-    const [isActive, setIsActive] = useState(false);
-    const [writer, setwriter] = useState('');
-    const [password, setPassword] = useState('');
-    const [title, setTitle] = useState('');
-    const [contents, setContents] = useState('');
-    const [youtube, setYoutube] = useState('');
-    const [adress, setAdress] = useState('');
+    const [isActive, setIsActive] = useState<boolean>(false);
+    const [writer, setwriter] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [title, setTitle] = useState<string>('');
+    const [contents, setContents] = useState<string>('');
+    const [youtube, setYoutube] = useState<string>('');
+    const [adress, setAdress] = useState<string>('');
 
-    const [writerError, setwriterError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-    const [titleError, setTitleError] = useState('');
-    const [contentsError, setContentsError] = useState('');
-    const [youtubeError, setYoutubeError] = useState('');
-    const [adressError, setAdressError] = useState('');
+    const [writerError, setwriterError] = useState<string>('');
+    const [passwordError, setPasswordError] = useState<string>('');
+    const [titleError, setTitleError] = useState<string>('');
+    const [contentsError, setContentsError] = useState<string>('');
+    const [youtubeError, setYoutubeError] = useState<string>('');
+    const [adressError, setAdressError] = useState<string>('');
 
-    const [createBoard] = useMutation(CREATE_BOARD);
-    const [updateBoard] = useMutation(UPDATE_BOARD);
+    const [createBoard] = useMutation<
+        Pick<IMutation, 'createBoard'>,
+        IMutationCreateBoardArgs
+    >(CREATE_BOARD);
+    const [updateBoard] = useMutation<
+        Pick<IMutation, 'updateBoard'>,
+        IMutationUpdateBoardArgs
+    >(UPDATE_BOARD);
 
-    function onChangeWriter(event) {
+    function onChangeWriter(event: ChangeEvent<HTMLInputElement>) {
         const { value } = event.target;
         setwriter(value);
         if (value && password && title && contents) setIsActive(true);
     }
 
-    function onChangePassword(event) {
+    function onChangePassword(event: ChangeEvent<HTMLInputElement>) {
         const { value } = event.target;
         setPassword(value);
         if (writer && value && title && contents) setIsActive(true);
     }
 
-    function onChangeTitle(event) {
+    function onChangeTitle(event: ChangeEvent<HTMLInputElement>) {
         const { value } = event.target;
         setTitle(value);
         if (writer && password && value && contents) setIsActive(true);
     }
 
-    function onChangeContents(event) {
+    function onChangeContents(event: ChangeEvent<HTMLTextAreaElement>) {
         const { value } = event.target;
         setContents(value);
         if (writer && password && title && value) setIsActive(true);
     }
 
-    function onChangeYoutube(event) {
+    function onChangeYoutube(event: ChangeEvent<HTMLInputElement>) {
         const { value } = event.target;
         setYoutube(value);
     }
 
-    function onChangeAddress(event) {
+    function onChangeAddress(event: ChangeEvent<HTMLInputElement>) {
         const { value } = event.target;
         setAdress(value);
     }
@@ -87,16 +100,19 @@ export default function BoardWrite(props) {
     }
 
     const onClickUpdate = async () => {
-        const updateBoardInput = {};
-        const myvariables = { boardId: router.query.boardId, password };
+        const updateBoardInput: IUpdateBoardInput = {};
         if (title) updateBoardInput.title = title;
         if (contents) updateBoardInput.contents = contents;
-        if (updateBoardInput) myvariables.updateBoardInput = updateBoardInput;
+
         try {
             const result = await updateBoard({
-                variables: myvariables,
+                variables: {
+                    boardId: String(router.query.boardId),
+                    password,
+                    updateBoardInput,
+                },
             });
-            console.log(result, 'result입니다.');
+
             router.push(`/boards/${result.data.updateBoard._id}`);
         } catch (error) {
             alert(error.message);

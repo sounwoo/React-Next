@@ -1,7 +1,8 @@
 import { getDate } from '../../util/utiles';
 import * as s from './BoardDetail.styles';
+import { IBoardDetailUIProps } from './BoardDetail.types';
 
-export default function BoardDetailUI(props) {
+export default function BoardDetailUI(props: IBoardDetailUIProps) {
     return (
         <s.Wrapper>
             <s.CardWrapper>

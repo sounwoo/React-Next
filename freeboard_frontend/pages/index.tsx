@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import styles from '@/styles/Home.module.css';
+import styles from '/styles/Home.module.css';
 
 export default function Home() {
     return (
@@ -11,10 +11,10 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className={`${styles.main} ${inter.className}`}>
+            <main className={styles.main}>
                 <div className={styles.description}>
                     <p>
-                        Get started by editing&nbsp;
+                        Get started by editing123123123123123123123123123&nbsp;
                         <code className={styles.code}>pages/index.js</code>
                     </p>
                     <div>
@@ -45,8 +45,16 @@ export default function Home() {
                         height={37}
                         priority
                     />
+                    <div className={styles.thirteen}>
+                        <Image
+                            src="/thirteen.svg"
+                            alt="13"
+                            width={40}
+                            height={31}
+                            priority
+                        />
+                    </div>
                 </div>
-                <div></div>
             </main>
         </>
     );
