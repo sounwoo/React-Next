@@ -1,83 +1,87 @@
-import { useRouter } from 'next/router';
-import { ChangeEvent, useState } from 'react';
-import BoardWriteUI from './BoardWrite.presenter';
-import { CREATE_BOARD, UPDATE_BOARD } from './BoardWrite.queries';
-import { useMutation } from '@apollo/client';
-import { IBoardWriteProps } from './BoardWrite.types';
+import { useRouter } from "next/router";
+import { ChangeEvent, useState } from "react";
+import BoardWriteUI from "./BoardWrite.presenter";
+import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
+import { useMutation } from "@apollo/client";
+import { IBoardWriteProps } from "./BoardWrite.types";
 import {
     IMutation,
     IMutationCreateBoardArgs,
     IMutationUpdateBoardArgs,
     IUpdateBoardInput,
-} from '../../../../commons/types/generated/types';
-import { type } from 'os';
+} from "../../../../commons/types/generated/types";
+import { type } from "os";
 
-export default function BoardWrite(props: IBoardWriteProps) {
+export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     const router = useRouter();
 
     const [isActive, setIsActive] = useState<boolean>(false);
-    const [writer, setwriter] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [title, setTitle] = useState<string>('');
-    const [contents, setContents] = useState<string>('');
-    const [youtube, setYoutube] = useState<string>('');
-    const [adress, setAdress] = useState<string>('');
+    const [writer, setwriter] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [title, setTitle] = useState<string>("");
+    const [contents, setContents] = useState<string>("");
+    const [youtube, setYoutube] = useState<string>("");
+    const [adress, setAdress] = useState<string>("");
 
-    const [writerError, setwriterError] = useState<string>('');
-    const [passwordError, setPasswordError] = useState<string>('');
-    const [titleError, setTitleError] = useState<string>('');
-    const [contentsError, setContentsError] = useState<string>('');
-    const [youtubeError, setYoutubeError] = useState<string>('');
-    const [adressError, setAdressError] = useState<string>('');
+    const [writerError, setwriterError] = useState<string>("");
+    const [passwordError, setPasswordError] = useState<string>("");
+    const [titleError, setTitleError] = useState<string>("");
+    const [contentsError, setContentsError] = useState<string>("");
+    const [youtubeError, setYoutubeError] = useState<string>("");
+    const [adressError, setAdressError] = useState<string>("");
 
     const [createBoard] = useMutation<
-        Pick<IMutation, 'createBoard'>,
+        Pick<IMutation, "createBoard">,
         IMutationCreateBoardArgs
     >(CREATE_BOARD);
     const [updateBoard] = useMutation<
-        Pick<IMutation, 'updateBoard'>,
+        Pick<IMutation, "updateBoard">,
         IMutationUpdateBoardArgs
     >(UPDATE_BOARD);
 
-    function onChangeWriter(event: ChangeEvent<HTMLInputElement>) {
+    function onChangeWriter(event: ChangeEvent<HTMLInputElement>): void {
         const { value } = event.target;
         setwriter(value);
         if (value && password && title && contents) setIsActive(true);
     }
 
-    function onChangePassword(event: ChangeEvent<HTMLInputElement>) {
+    function onChangePassword(event: ChangeEvent<HTMLInputElement>): void {
         const { value } = event.target;
         setPassword(value);
         if (writer && value && title && contents) setIsActive(true);
     }
 
-    function onChangeTitle(event: ChangeEvent<HTMLInputElement>) {
+    function onChangeTitle(event: ChangeEvent<HTMLInputElement>): void {
         const { value } = event.target;
         setTitle(value);
         if (writer && password && value && contents) setIsActive(true);
     }
 
-    function onChangeContents(event: ChangeEvent<HTMLTextAreaElement>) {
+    function onChangeContents(event: ChangeEvent<HTMLTextAreaElement>): void {
         const { value } = event.target;
         setContents(value);
         if (writer && password && title && value) setIsActive(true);
     }
 
-    function onChangeYoutube(event: ChangeEvent<HTMLInputElement>) {
+    function onChangeYoutube(event: ChangeEvent<HTMLInputElement>): void {
         const { value } = event.target;
         setYoutube(value);
     }
 
-    function onChangeAddress(event: ChangeEvent<HTMLInputElement>) {
+    function onChangeAddress(event: ChangeEvent<HTMLInputElement>): void {
         const { value } = event.target;
         setAdress(value);
     }
 
-    async function onClickSubmit() {
-        !writer ? setwriterError('이름을 입력해 주세요') : setwriterError('');
-        !password ? setPasswordError('비밀번호를 입력해 주세요') : setPasswordError('');
-        !title ? setTitleError('제목을 입력해 주세요') : setTitleError('');
-        !contents ? setContentsError('내용을 입력해 주세요') : setContentsError('');
+    async function onClickSubmit(): Promise<void> {
+        !writer ? setwriterError("이름을 입력해 주세요") : setwriterError("");
+        !password
+            ? setPasswordError("비밀번호를 입력해 주세요")
+            : setPasswordError("");
+        !title ? setTitleError("제목을 입력해 주세요") : setTitleError("");
+        !contents
+            ? setContentsError("내용을 입력해 주세요")
+            : setContentsError("");
         // !youtube ? setYoutubeError('Youtube링크를 입력해 주세요') : setYoutubeError('');
         // !adress ? setAdressError('주소를 입력해 주세요') : setAdressError('');
 
@@ -93,9 +97,9 @@ export default function BoardWrite(props: IBoardWriteProps) {
                         },
                     },
                 });
-                router.push(`/boards/${result.data.createBoard._id}`);
+                await router.push(`/boards/${result.data?.createBoard._id}`);
             } catch (error) {
-                alert(error.message);
+                if (error instanceof Error) alert(error.message);
             }
         }
     }
@@ -106,8 +110,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
         if (contents) updateBoardInput.contents = contents;
 
         try {
-            if (typeof router.query.boardId !== 'string') {
-                alert('시스템에 문제가 있습니다.');
+            if (typeof router.query.boardId !== "string") {
+                alert("시스템에 문제가 있습니다.");
                 return;
             }
             const result = await updateBoard({
@@ -118,7 +122,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
                 },
             });
 
-            router.push(`/boards/${result.data.updateBoard._id}`);
+            router.push(`/boards/${result.data?.updateBoard._id}`);
         } catch (error) {
             if (error instanceof Error) alert(error.message);
         }

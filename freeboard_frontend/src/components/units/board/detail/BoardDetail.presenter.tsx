@@ -1,8 +1,8 @@
-import { getDate } from '../../util/utiles';
-import * as s from './BoardDetail.styles';
-import { IBoardDetailUIProps } from './BoardDetail.types';
+import { getDate } from "../../util/utiles";
+import * as s from "./BoardDetail.styles";
+import { IBoardDetailUIProps } from "./BoardDetail.types";
 
-export default function BoardDetailUI(props: IBoardDetailUIProps) {
+export default function BoardDetailUI(props: IBoardDetailUIProps): JSX.Element {
     return (
         <s.Wrapper>
             <s.CardWrapper>
