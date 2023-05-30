@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
     width: 1200px;
@@ -77,4 +77,32 @@ export const Button = styled.button`
         background-color: gold;
         border-color: white;
     }
+`;
+
+export const LikeWarpper = styled.div`
+    width: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+export const Like = styled.div`
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+
+    :hover {
+        color: #ffd600;
+    }
+`;
+
+export const Youtube = styled.div`
+    width: 700px;
+    height: 500px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 `;

@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
     width: 1200px;
@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
 `;
 
 export const WrapperHeader = styled.div`
-    width: 70px;
+    width: 200px;
     height: 30px;
     display: flex;
     direction: row;

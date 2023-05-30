@@ -1,39 +1,46 @@
-import CommentListUI from './CommentList.presenter';
-import { useMutation, useQuery } from '@apollo/client';
+import CommentListUI from "./CommentList.presenter";
+import { useMutation, useQuery } from "@apollo/client";
 import {
     IMutation,
     IMutationDeleteBoardCommentArgs,
     IQuery,
     IQueryFetchBoardCommentsArgs,
-} from '../../../../commons/types/generated/types';
-import { DELETE_BOARD_COMMENT, FETCH_BOARD_COMMENTS } from './CommentList.queries';
-import { useRouter } from 'next/router';
-import { MouseEvent } from 'react';
+} from "../../../../commons/types/generated/types";
+import {
+    DELETE_BOARD_COMMENT,
+    FETCH_BOARD_COMMENTS,
+} from "./CommentList.queries";
+import { useRouter } from "next/router";
+import { ChangeEvent, MouseEvent, useState } from "react";
+import { Modal } from "antd";
 
-export default function CommentList() {
+export default function CommentList(): JSX.Element {
     const router = useRouter();
-    if (!router || typeof router.query.boardId !== 'string') return <></>;
+
+    if (!router || typeof router.query.boardId !== "string") return <></>;
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [commentId, setCommentId] = useState("");
+    const [password, setPassword] = useState("");
+
     const [deleteBoardComment] = useMutation<
-        Pick<IMutation, 'deleteBoardComment'>,
+        Pick<IMutation, "deleteBoardComment">,
         IMutationDeleteBoardCommentArgs
     >(DELETE_BOARD_COMMENT);
 
     const { data } = useQuery<
-        Pick<IQuery, 'fetchBoardComments'>,
+        Pick<IQuery, "fetchBoardComments">,
         IQueryFetchBoardCommentsArgs
     >(FETCH_BOARD_COMMENTS, {
         variables: { boardId: router.query.boardId },
     });
 
-    const onClickCommentDelete = async (event: MouseEvent<HTMLImageElement>) => {
-        const password = prompt('비밀번호를 입력하세요.');
-
+    const onClickCommentDelete = async () => {
         try {
-            if (!(event.target instanceof HTMLImageElement)) return alert('시스템 문제');
             await deleteBoardComment({
                 variables: {
                     password,
-                    boardCommentId: event.target.id,
+                    boardCommentId: commentId,
                 },
                 refetchQueries: [
                     {
@@ -42,13 +49,37 @@ export default function CommentList() {
                     },
                 ],
             });
+            Modal.success({ content: "삭제완료!" });
+            setIsOpen((prve) => !prve);
         } catch (error) {
-            if (error instanceof Error) alert(error.message);
+            if (error instanceof Error) {
+                Modal.error({ content: error.message });
+                setIsOpen((prve) => !prve);
+            }
         }
     };
 
-    try {
-    } catch (error) {}
+    const onToggleModal = (event: MouseEvent<HTMLImageElement>): void => {
+        setCommentId(event.currentTarget.id);
+        onCancel();
+    };
 
-    return <CommentListUI data={data} onClickCommentDelete={onClickCommentDelete} />;
+    const onChangePassword = (event: ChangeEvent<HTMLInputElement>): void => {
+        setPassword(event.target.value);
+    };
+
+    const onCancel = () => {
+        setIsOpen((prve) => !prve);
+    };
+
+    return (
+        <CommentListUI
+            data={data}
+            onClickCommentDelete={onClickCommentDelete}
+            onToggleModal={onToggleModal}
+            isOpen={isOpen}
+            onChangePassword={onChangePassword}
+            onCancel={onCancel}
+        />
+    );
 }

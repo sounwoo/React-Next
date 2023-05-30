@@ -10,7 +10,7 @@ import {
     IMutationUpdateBoardArgs,
     IUpdateBoardInput,
 } from "../../../../commons/types/generated/types";
-import { type } from "os";
+import { Modal } from "antd";
 
 export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     const router = useRouter();
@@ -82,7 +82,9 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
         !contents
             ? setContentsError("내용을 입력해 주세요")
             : setContentsError("");
-        // !youtube ? setYoutubeError('Youtube링크를 입력해 주세요') : setYoutubeError('');
+        !youtube
+            ? setYoutubeError("Youtube링크를 입력해 주세요")
+            : setYoutubeError("");
         // !adress ? setAdressError('주소를 입력해 주세요') : setAdressError('');
 
         if (writer && password && title && contents) {
@@ -94,12 +96,15 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
                             contents,
                             password,
                             writer,
+                            youtubeUrl: youtube,
                         },
                     },
                 });
+                Modal.success({ content: "게시물 작성 완료!" });
                 await router.push(`/boards/${result.data?.createBoard._id}`);
             } catch (error) {
-                if (error instanceof Error) alert(error.message);
+                if (error instanceof Error)
+                    Modal.error({ content: error.message });
             }
         }
     }
@@ -108,7 +113,7 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
         const updateBoardInput: IUpdateBoardInput = {};
         if (title) updateBoardInput.title = title;
         if (contents) updateBoardInput.contents = contents;
-
+        if (youtube) updateBoardInput.youtubeUrl = youtube;
         try {
             if (typeof router.query.boardId !== "string") {
                 alert("시스템에 문제가 있습니다.");
@@ -121,10 +126,10 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
                     updateBoardInput,
                 },
             });
-
+            Modal.success({ content: "업데이트 완료!" });
             router.push(`/boards/${result.data?.updateBoard._id}`);
         } catch (error) {
-            if (error instanceof Error) alert(error.message);
+            if (error instanceof Error) Modal.error({ content: error.message });
         }
     };
 

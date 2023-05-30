@@ -1,5 +1,6 @@
-import * as S from './CommentWrite.styles';
-import { CommentWrtieUIProps } from './CommentWrite.types';
+import * as S from "./CommentWrite.styles";
+import { CommentWrtieUIProps } from "./CommentWrite.types";
+import { Rate } from "antd";
 
 export default function CommentWriteUI(props: CommentWrtieUIProps) {
     return (
@@ -7,6 +8,12 @@ export default function CommentWriteUI(props: CommentWrtieUIProps) {
             <S.WrapperHeader>
                 <S.Vector src="/images/comments/vector.png" />
                 <span>댓글</span>
+                <span id="rate">
+                    <Rate
+                        onChange={props.onChangeRating}
+                        value={props.rating}
+                    />
+                </span>
             </S.WrapperHeader>
             <S.WriterWrapper>
                 <S.Input
@@ -27,7 +34,9 @@ export default function CommentWriteUI(props: CommentWrtieUIProps) {
                     onChange={props.onChangeContents}
                 ></S.Contents>
                 <S.BottomWrapper>
-                    <S.ContentsLength>{props.contents.length}/100</S.ContentsLength>
+                    <S.ContentsLength>
+                        {props.contents.length}/100
+                    </S.ContentsLength>
                     <S.Button onClick={props.onClickSubmit}>등록하기</S.Button>
                 </S.BottomWrapper>
             </S.ContentsWrapper>

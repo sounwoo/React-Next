@@ -1,4 +1,5 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
+import { Rate, Modal } from "antd";
 
 export const Warpper = styled.div`
     width: 1200px;
@@ -53,8 +54,10 @@ export const ItemWarpper = styled.div`
     align-items: center;
 `;
 
-export const Star = styled.div`
+export const Star = styled(Rate)`
     margin-left: 15px;
+    font-size: 18px;
+    margin-bottom: 6px;
 `;
 
 export const DeleteButton = styled.img`
@@ -80,9 +83,18 @@ export const Option = styled.div`
 `;
 
 export const Bottom = styled.div`
+    height: 40px;
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-top: 10px;
     margin-left: 64px;
+`;
+export const PasswordModal = styled(Modal)``;
+
+export const PasswordInput = styled.input`
+    width: 50%;
+    height: 20px;
+    margin-top: 20px;
+    margin-left: 10px;
 `;

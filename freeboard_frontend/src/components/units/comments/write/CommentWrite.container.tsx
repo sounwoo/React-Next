@@ -1,44 +1,53 @@
-import { ChangeEvent, useState } from 'react';
-import CommentWriteUI from './CommentWrite.presenter';
-import { useMutation } from '@apollo/client';
-import { CREATE_BOARD_COMMENT } from './CommentWrite.queries';
+import { ChangeEvent, useState } from "react";
+import CommentWriteUI from "./CommentWrite.presenter";
+import { useMutation } from "@apollo/client";
+import { CREATE_BOARD_COMMENT } from "./CommentWrite.queries";
 import {
     IMutation,
     IMutationCreateBoardCommentArgs,
-} from '../../../../commons/types/generated/types';
-import { useRouter } from 'next/router';
-import { FETCH_BOARD_COMMENTS } from '../list/CommentList.queries';
+} from "../../../../commons/types/generated/types";
+import { useRouter } from "next/router";
+import { FETCH_BOARD_COMMENTS } from "../list/CommentList.queries";
+import { Modal } from "antd";
 
 export default function CommentWrite() {
     const router = useRouter();
 
-    const [writer, setWriter] = useState('');
-    const [password, setPassword] = useState('');
-    const [contents, setContents] = useState('');
+    const [writer, setWriter] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [contents, setContents] = useState<string>("");
+    const [rating, setRating] = useState<number>(0);
 
     const [createBoardComment] = useMutation<
-        Pick<IMutation, 'createBoardComment'>,
+        Pick<IMutation, "createBoardComment">,
         IMutationCreateBoardCommentArgs
     >(CREATE_BOARD_COMMENT);
 
-    const onChangeWriter = (evnet: ChangeEvent<HTMLInputElement>) => {
+    const onChangeWriter = (evnet: ChangeEvent<HTMLInputElement>): void => {
         setWriter(evnet.target.value);
     };
 
-    const onChangePassword = (evnet: ChangeEvent<HTMLInputElement>) => {
+    const onChangePassword = (evnet: ChangeEvent<HTMLInputElement>): void => {
         setPassword(evnet.target.value);
     };
 
-    const onChangeContents = (evnet: ChangeEvent<HTMLTextAreaElement>) => {
+    const onChangeContents = (
+        evnet: ChangeEvent<HTMLTextAreaElement>
+    ): void => {
         setContents(evnet.target.value);
     };
 
+    const onChangeRating = (value: number): void => {
+        setRating(value);
+    };
+
     const onClickSubmit = async () => {
-        if (!writer) return alert('작성자를 입력해주세요.');
-        if (!password) return alert('비밀번호를 입력해주세요.');
-        if (!contents) return alert('내용을 입력해 주세요.');
+        if (!writer) return Modal.error({ content: "작성자를 입력해주세요" });
+        if (!password)
+            return Modal.error({ content: "비밀번호를 입력해주세요" });
+        if (!contents) return Modal.error({ content: "내용을 입력해주세요" });
         try {
-            if (!router || typeof router.query.boardId !== 'string') return <></>;
+            if (typeof router.query.boardId !== "string") return <></>;
             await createBoardComment({
                 variables: {
                     boardId: router.query.boardId,
@@ -46,7 +55,7 @@ export default function CommentWrite() {
                         writer,
                         password,
                         contents,
-                        rating: 2,
+                        rating,
                     },
                 },
                 refetchQueries: [
@@ -56,9 +65,10 @@ export default function CommentWrite() {
                     },
                 ],
             });
+            Modal.success({ content: "댓글 작성 완료!" });
             router.push(`/boards/${router.query.boardId}`);
         } catch (error) {
-            if (error instanceof Error) alert(error.message);
+            if (error instanceof Error) Modal.error({ content: error.message });
         }
     };
 
@@ -68,6 +78,8 @@ export default function CommentWrite() {
             onChangePassword={onChangePassword}
             onChangeContents={onChangeContents}
             onClickSubmit={onClickSubmit}
+            onChangeRating={onChangeRating}
+            rating={rating}
             contents={contents}
         />
     );
