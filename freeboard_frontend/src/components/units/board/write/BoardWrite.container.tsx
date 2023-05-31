@@ -11,9 +11,13 @@ import {
     IUpdateBoardInput,
 } from "../../../../commons/types/generated/types";
 import { Modal } from "antd";
+import DaumPostcodeEmbed from "react-daum-postcode";
+import type { Address } from "react-daum-postcode";
 
 export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     const router = useRouter();
+
+    const [isOpen, setIsOpen] = useState(false);
 
     const [isActive, setIsActive] = useState<boolean>(false);
     const [writer, setwriter] = useState<string>("");
@@ -21,14 +25,16 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     const [title, setTitle] = useState<string>("");
     const [contents, setContents] = useState<string>("");
     const [youtube, setYoutube] = useState<string>("");
-    const [adress, setAdress] = useState<string>("");
+    const [address, setAddress] = useState<string>("");
+    const [zipcode, setZipcode] = useState<string>("");
+    const [addressDetail, setAddressDetail] = useState<string>("");
 
     const [writerError, setwriterError] = useState<string>("");
     const [passwordError, setPasswordError] = useState<string>("");
     const [titleError, setTitleError] = useState<string>("");
     const [contentsError, setContentsError] = useState<string>("");
     const [youtubeError, setYoutubeError] = useState<string>("");
-    const [adressError, setAdressError] = useState<string>("");
+    const [addressError, setAddressError] = useState<string>("");
 
     const [createBoard] = useMutation<
         Pick<IMutation, "createBoard">,
@@ -68,10 +74,21 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
         setYoutube(value);
     }
 
-    function onChangeAddress(event: ChangeEvent<HTMLInputElement>): void {
+    function onChangeAddressDetail(event: ChangeEvent<HTMLInputElement>): void {
         const { value } = event.target;
-        setAdress(value);
+        setAddressDetail(value);
     }
+
+    const onToggleModal = (): void => {
+        setIsOpen((prev) => !prev);
+    };
+
+    const handleComplete = (data: Address): void => {
+        console.log(data.zonecode);
+        setZipcode(data.zonecode);
+        setAddress(data.address);
+        onToggleModal();
+    };
 
     async function onClickSubmit(): Promise<void> {
         !writer ? setwriterError("이름을 입력해 주세요") : setwriterError("");
@@ -85,9 +102,11 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
         !youtube
             ? setYoutubeError("Youtube링크를 입력해 주세요")
             : setYoutubeError("");
-        // !adress ? setAdressError('주소를 입력해 주세요') : setAdressError('');
+        !address
+            ? setAddressError("주소를 입력해 주세요")
+            : setAddressError("");
 
-        if (writer && password && title && contents) {
+        if (writer && password && title && contents && youtube && address) {
             try {
                 const result = await createBoard({
                     variables: {
@@ -97,6 +116,11 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
                             password,
                             writer,
                             youtubeUrl: youtube,
+                            boardAddress: {
+                                zipcode,
+                                address,
+                                addressDetail,
+                            },
                         },
                     },
                 });
@@ -140,18 +164,23 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
             titleError={titleError}
             contentsError={contentsError}
             youtubeError={youtubeError}
-            adressError={adressError}
+            addressError={addressError}
             onChangeWriter={onChangeWriter}
             onChangePassword={onChangePassword}
             onChangeTitle={onChangeTitle}
             onChangeContents={onChangeContents}
             onClickSubmit={onClickSubmit}
             onChangeYoutube={onChangeYoutube}
-            onChangeAddress={onChangeAddress}
+            onChangeAddressDetail={onChangeAddressDetail}
             isActive={isActive}
             isEdit={props.isEdit}
             onClickUpdate={onClickUpdate}
             data={props.data}
+            isOpen={isOpen}
+            onToggleModal={onToggleModal}
+            handleComplete={handleComplete}
+            address={address}
+            zipcode={zipcode}
         />
     );
 }

@@ -1,9 +1,20 @@
+import DaumPostcodeEmbed from "react-daum-postcode";
 import * as s from "./BoardWrite.styles";
 import { IBoardWriteUIProps } from "./BoardWrite.types";
+import { Modal } from "antd";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
     return (
         <s.Wrapper>
+            {props.isOpen && (
+                <Modal
+                    open={true}
+                    onOk={props.onToggleModal}
+                    onCancel={props.onToggleModal}
+                >
+                    <DaumPostcodeEmbed onComplete={props.handleComplete} />
+                </Modal>
+            )}
             <s.Title>게시물 {props.isEdit ? "수정" : "등록"}</s.Title>
             <s.WriterWrapper>
                 <s.InputWrapper>
@@ -49,11 +60,13 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
             <s.InputWrapper>
                 <s.Label>주소</s.Label>
                 <s.FindMail>
-                    <s.Post placeholder="07250" />
-                    <s.SearchButton>우편번호 검색</s.SearchButton>
-                    <s.Adress onChange={props.onChangeAddress} />
-                    <s.Error>{props.adressError}</s.Error>
-                    <s.Adress />
+                    <s.Post placeholder="07250" defaultValue={props.zipcode} />
+                    <s.SearchButton onClick={props.onToggleModal}>
+                        우편번호 검색
+                    </s.SearchButton>
+                    <s.Adress defaultValue={props.address} />
+                    <s.Error>{props.addressError}</s.Error>
+                    <s.Adress onChange={props.onChangeAddressDetail} />
                 </s.FindMail>
             </s.InputWrapper>
             <s.InputWrapper>

@@ -1,9 +1,10 @@
-import { ChangeEvent, MouseEvent } from 'react';
-import { IQuery } from '../../../../commons/types/generated/types';
+import { ChangeEvent, MouseEvent } from "react";
+import { IQuery } from "../../../../commons/types/generated/types";
+import { Address } from "react-daum-postcode";
 
 export interface IBoardWriteProps {
     isEdit: boolean;
-    data?: Pick<IQuery, 'fetchBoard'>;
+    data?: Pick<IQuery, "fetchBoard">;
 }
 
 export interface IUpdateBoardInput {
@@ -17,18 +18,23 @@ export interface IBoardWriteUIProps {
     titleError: string;
     contentsError: string;
     youtubeError: string;
-    adressError: string;
+    addressError: string;
     onChangeWriter: (event: ChangeEvent<HTMLInputElement>) => void;
     onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
     onChangeTitle: (event: ChangeEvent<HTMLInputElement>) => void;
     onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
     onChangeYoutube: (event: ChangeEvent<HTMLInputElement>) => void;
-    onChangeAddress: (event: ChangeEvent<HTMLInputElement>) => void;
+    onChangeAddressDetail: (event: ChangeEvent<HTMLInputElement>) => void;
     onClickSubmit: () => void;
     onClickUpdate: () => void;
     isActive: boolean;
     isEdit: boolean;
-    data?: Pick<IQuery, 'fetchBoard'>;
+    data?: Pick<IQuery, "fetchBoard">;
+    isOpen: boolean;
+    onToggleModal: () => void;
+    handleComplete: (data: Address) => void;
+    address: string;
+    zipcode: string;
 }
 
 export interface ISubmitButtonProps {

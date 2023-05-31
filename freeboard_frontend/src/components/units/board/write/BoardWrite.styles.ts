@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import { ISubmitButtonProps } from './BoardWrite.types';
+import styled from "@emotion/styled";
+import { ISubmitButtonProps } from "./BoardWrite.types";
 
 export const Wrapper = styled.div`
     width: 1200px;
@@ -78,13 +78,13 @@ export const FindMail = styled.div`
 export const Post = styled.input`
     width: 77px;
     height: 30px;
-    padding-left: 50px;
+    padding-left: 45px;
     border: 1px solid #bdbdbd;
 `;
 
 export const SearchButton = styled.button`
     width: 120px;
-    height: 30px;
+    height: 35px;
     font-size: 16px;
     font-weight: 500;
     color: white;
@@ -162,7 +162,7 @@ export const SubmitButton = styled.button`
     cursor: pointer;
 
     background-color: ${(props: ISubmitButtonProps) =>
-        props.isActive ? 'yellow' : 'none'};
+        props.isActive ? "yellow" : "none"};
 `;
 
 export const UpdateButton = styled.button`
