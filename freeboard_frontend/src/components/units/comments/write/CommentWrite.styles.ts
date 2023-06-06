@@ -10,12 +10,13 @@ export const WrapperHeader = styled.div`
     height: 30px;
     display: flex;
     direction: row;
-    justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
 `;
 
-export const Vector = styled.img``;
+export const Vector = styled.img`
+    margin-right: 10px;
+`;
 
 export const WriterWrapper = styled.div`
     display: flex;

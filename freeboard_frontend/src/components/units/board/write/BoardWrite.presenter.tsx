@@ -60,13 +60,36 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
             <s.InputWrapper>
                 <s.Label>주소</s.Label>
                 <s.FindMail>
-                    <s.Post placeholder="07250" defaultValue={props.zipcode} />
+                    <s.Post
+                        placeholder="07250"
+                        readOnly
+                        value={
+                            props.zipcode !== ""
+                                ? props.zipcode
+                                : props.data?.fetchBoard.boardAddress
+                                      ?.zipcode ?? ""
+                        }
+                    />
                     <s.SearchButton onClick={props.onToggleModal}>
                         우편번호 검색
                     </s.SearchButton>
-                    <s.Adress defaultValue={props.address} />
+                    <s.Adress
+                        readOnly
+                        value={
+                            props.address !== ""
+                                ? props.address
+                                : props.data?.fetchBoard.boardAddress
+                                      ?.address ?? ""
+                        }
+                    />
                     <s.Error>{props.addressError}</s.Error>
-                    <s.Adress onChange={props.onChangeAddressDetail} />
+                    <s.Adress
+                        onChange={props.onChangeAddressDetail}
+                        defaultValue={
+                            props.data?.fetchBoard.boardAddress
+                                ?.addressDetail ?? ""
+                        }
+                    />
                 </s.FindMail>
             </s.InputWrapper>
             <s.InputWrapper>
@@ -75,6 +98,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                     type="text"
                     placeholder="링크를 복사해주세요"
                     onChange={props.onChangeYoutube}
+                    defaultValue={props.data?.fetchBoard.youtubeUrl ?? ""}
                 />
                 <s.Error>{props.youtubeError}</s.Error>
             </s.InputWrapper>

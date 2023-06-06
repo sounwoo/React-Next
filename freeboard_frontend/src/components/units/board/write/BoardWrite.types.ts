@@ -27,12 +27,12 @@ export interface IBoardWriteUIProps {
     onChangeAddressDetail: (event: ChangeEvent<HTMLInputElement>) => void;
     onClickSubmit: () => void;
     onClickUpdate: () => void;
+    onToggleModal: () => void;
+    handleComplete: (data: Address) => void;
     isActive: boolean;
     isEdit: boolean;
     data?: Pick<IQuery, "fetchBoard">;
     isOpen: boolean;
-    onToggleModal: () => void;
-    handleComplete: (data: Address) => void;
     address: string;
     zipcode: string;
 }

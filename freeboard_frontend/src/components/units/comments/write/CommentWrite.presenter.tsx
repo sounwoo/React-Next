@@ -8,30 +8,28 @@ export default function CommentWriteUI(props: CommentWrtieUIProps) {
             <S.WrapperHeader>
                 <S.Vector src="/images/comments/vector.png" />
                 <span>댓글</span>
-                <span id="rate">
-                    <Rate
-                        onChange={props.onChangeRating}
-                        value={props.rating}
-                    />
-                </span>
             </S.WrapperHeader>
             <S.WriterWrapper>
                 <S.Input
                     type="text"
                     placeholder="작성자"
                     onChange={props.onChangeWriter}
+                    value={props.writer}
                 />
                 <S.Input
                     type="password"
                     placeholder="비밀번호"
                     onChange={props.onChangePassword}
+                    value={props.password}
                 />
+                <Rate onChange={props.setRating} value={props.rating} />
             </S.WriterWrapper>
             <S.ContentsWrapper>
                 <S.Contents
                     maxLength={100}
                     placeholder="개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다."
                     onChange={props.onChangeContents}
+                    value={props.contents}
                 ></S.Contents>
                 <S.BottomWrapper>
                     <S.ContentsLength>

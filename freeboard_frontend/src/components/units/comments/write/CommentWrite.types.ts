@@ -5,7 +5,9 @@ export interface CommentWrtieUIProps {
     onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
     onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
     onClickSubmit: (event: MouseEvent<HTMLButtonElement>) => void;
-    onChangeRating: (value: number) => void;
+    setRating: (value: number) => void;
     rating: number;
+    writer: string;
+    password: string;
     contents: string;
 }

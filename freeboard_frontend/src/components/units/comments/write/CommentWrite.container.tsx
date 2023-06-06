@@ -37,10 +37,6 @@ export default function CommentWrite() {
         setContents(evnet.target.value);
     };
 
-    const onChangeRating = (value: number): void => {
-        setRating(value);
-    };
-
     const onClickSubmit = async () => {
         if (!writer) return Modal.error({ content: "작성자를 입력해주세요" });
         if (!password)
@@ -66,7 +62,10 @@ export default function CommentWrite() {
                 ],
             });
             Modal.success({ content: "댓글 작성 완료!" });
-            router.push(`/boards/${router.query.boardId}`);
+            setContents("");
+            setPassword("");
+            setRating(0);
+            setWriter("");
         } catch (error) {
             if (error instanceof Error) Modal.error({ content: error.message });
         }
@@ -78,8 +77,10 @@ export default function CommentWrite() {
             onChangePassword={onChangePassword}
             onChangeContents={onChangeContents}
             onClickSubmit={onClickSubmit}
-            onChangeRating={onChangeRating}
+            setRating={setRating}
             rating={rating}
+            writer={writer}
+            password={password}
             contents={contents}
         />
     );

@@ -10,6 +10,7 @@ export const Header = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #bdbdbd;
     padding-bottom: 20px;
@@ -48,6 +49,11 @@ export const Body = styled.div`
 export const Title = styled.h1``;
 
 export const Avatar = styled.img``;
+
+export const AvatarWarpper = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
 
 export const Content = styled.div`
     width: 100%;
@@ -105,4 +111,13 @@ export const Youtube = styled.div`
     height: 500px;
     margin-top: 30px;
     margin-bottom: 30px;
+`;
+
+export const IconWarpper = styled.div``;
+
+export const LinkIcon = styled.img``;
+
+export const LocationIcon = styled.img`
+    cursor: pointer;
+    margin-left: 20px;
 `;

@@ -84,7 +84,6 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     };
 
     const handleComplete = (data: Address): void => {
-        console.log(data.zonecode);
         setZipcode(data.zonecode);
         setAddress(data.address);
         onToggleModal();
@@ -134,10 +133,29 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     }
 
     const onClickUpdate = async () => {
+        if (
+            !writer &&
+            !title &&
+            !contents &&
+            !youtube &&
+            !address &&
+            !addressDetail &&
+            !zipcode
+        )
+            return Modal.error({ content: "변경 사항이 없습니다." });
+        if (!password)
+            return Modal.error({ content: "패스워드를 입력해 주세요" });
         const updateBoardInput: IUpdateBoardInput = {};
         if (title) updateBoardInput.title = title;
         if (contents) updateBoardInput.contents = contents;
         if (youtube) updateBoardInput.youtubeUrl = youtube;
+        if (zipcode || address || addressDetail) {
+            updateBoardInput.boardAddress = {};
+            if (zipcode) updateBoardInput.boardAddress.zipcode = zipcode;
+            if (address) updateBoardInput.boardAddress.address = address;
+            if (addressDetail)
+                updateBoardInput.boardAddress.addressDetail = addressDetail;
+        }
         try {
             if (typeof router.query.boardId !== "string") {
                 alert("시스템에 문제가 있습니다.");
