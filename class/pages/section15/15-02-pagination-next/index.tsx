@@ -3,7 +3,9 @@ import {
     IQuery,
     IQueryFetchBoardsArgs,
 } from "../../../src/commons/types/generated/types";
-import type { MouseEvent } from "react";
+import { useState, type MouseEvent } from "react";
+import { Modal } from "antd";
+import { stat } from "fs";
 
 const FETCH_BOARDS = gql`
     query fetchBoards($page: Int) {
@@ -17,6 +19,8 @@ const FETCH_BOARDS = gql`
 `;
 
 export default function StaticRoutingMovedPage(): JSX.Element {
+    const [startPage, setStartPage] = useState(1);
+
     const { data, refetch } = useQuery<
         Pick<IQuery, "fetchBoards">,
         IQueryFetchBoardsArgs
@@ -24,6 +28,18 @@ export default function StaticRoutingMovedPage(): JSX.Element {
 
     const onClickPage = (event: MouseEvent<HTMLSpanElement>): void => {
         void refetch({ page: +event.currentTarget.id });
+    };
+
+    const onClickPrevPage = (): void => {
+        const prevePage = startPage - 10;
+        setStartPage(prevePage);
+        void refetch({ page: prevePage });
+    };
+
+    const onClickNextPage = (): void => {
+        const nextPage = startPage + 10;
+        setStartPage(nextPage);
+        void refetch({ page: nextPage });
     };
 
     return (
@@ -34,15 +50,17 @@ export default function StaticRoutingMovedPage(): JSX.Element {
                     <span style={{ margin: "10px" }}>{el.writer}</span>
                 </div>
             ))}
+            <span onClick={onClickPrevPage}> 이전 페이지 </span>
             {new Array(10).fill(1).map((_, index) => (
                 <span
-                    key={index + 1}
-                    id={String(index + 1)}
+                    key={index + startPage}
+                    id={String(index + startPage)}
                     onClick={onClickPage}
                 >
-                    {index + 1}
+                    {index + startPage}
                 </span>
             ))}
+            <span onClick={onClickNextPage}>다음 페이지</span>
         </div>
     );
 }
