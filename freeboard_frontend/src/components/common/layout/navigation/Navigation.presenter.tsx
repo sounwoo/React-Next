@@ -1,4 +1,4 @@
-import { Menu, MyInfo, Warpper } from "./Navigatrion.styles";
+import { Menu, MyInfo, Warpper } from "./Navigation.styles";
 
 export default function NavigatrionUI() {
     return (
