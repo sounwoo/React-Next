@@ -15,18 +15,19 @@ export const LogoImg = styled.img`
 `;
 
 export const LoginRegister = styled.div`
-    width: 140px;
+    width: 180px;
     display: flex;
     direction: row;
     justify-content: space-between;
 `;
 
 export const LoginButton = styled.button`
-    width: 80px;
+    width: 100px;
     height: 40px;
     background-color: white;
     border: none;
     cursor: pointer;
+    font-size: 15px;
 
     :hover {
         color: blue;
@@ -35,11 +36,12 @@ export const LoginButton = styled.button`
 
 export const RegisterButton = styled.button`
     border: none;
-    width: 80px;
+    width: 100px;
     height: 40px;
     cursor: pointer;
     background: #ffd600;
     border-radius: 10px;
+    font-size: 15px;
 
     :hover {
         color: blue;

@@ -12,7 +12,7 @@ export default function HeaderUI(props: IHeaderUIProps): JSX.Element {
         <Warpper>
             <LogoImg src="/images/logo.png" onClick={props.onClickLogo} />
             <LoginRegister>
-                <LoginButton>로그인</LoginButton>
+                <LoginButton onClick={props.onClickLogin}>로그인</LoginButton>
                 <RegisterButton>화원가입</RegisterButton>
             </LoginRegister>
         </Warpper>

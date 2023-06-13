@@ -11,7 +11,7 @@ export const Warpper = styled.div`
 `;
 
 export const Menu = styled.div`
-    width: 70px;
+    width: 100px;
     font-size: 15px;
     cursor: pointer;
     border: none;
@@ -19,14 +19,9 @@ export const Menu = styled.div`
     text-align: center;
     padding-left: 10px;
     padding-right: 10px;
-`;
+    color: #ab9000;
 
-export const MyInfo = styled.div`
-    width: 70px;
-    font-size: 15px;
-    cursor: pointer;
-    border: none;
-    text-align: center;
-    padding-left: 10px;
-    padding-right: 10px;
+    :hover {
+        color: black;
+    }
 `;

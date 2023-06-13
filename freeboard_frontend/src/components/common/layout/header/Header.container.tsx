@@ -8,5 +8,9 @@ export default function Header(): JSX.Element {
         router.push("/boards");
     };
 
-    return <HeaderUI onClickLogo={onClickLogo} />;
+    const onClickLogin = () => {
+        router.push("/login");
+    };
+
+    return <HeaderUI onClickLogo={onClickLogo} onClickLogin={onClickLogin} />;
 }
