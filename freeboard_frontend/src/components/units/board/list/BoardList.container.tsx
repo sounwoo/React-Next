@@ -21,8 +21,6 @@ export default function BoardList(): JSX.Element {
         IQueryFetchBoardsCountArgs
     >(FETCH_BOARDS_COUNT);
 
-    const lastPage = Math.ceil((dataBoardsCount?.fetchBoardsCount ?? 1) / 10);
-
     const onClickMoveToBoardsNew = () => {
         router.push("/boards/new");
     };
