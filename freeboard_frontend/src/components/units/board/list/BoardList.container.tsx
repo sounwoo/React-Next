@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { FETCH_BOARDS } from "./BoardList.queries";
+import { FETCH_BOARDS, FETCH_BOARDS_COUNT } from "./BoardList.queries";
 import BoardDetailUI from "./BoardList.presenter";
 import {
     IQuery,
@@ -8,7 +8,6 @@ import {
     IQueryFetchBoardsCountArgs,
 } from "../../../../commons/types/generated/types";
 import { MouseEvent } from "react";
-import { FETCH_BOARDS_COUNT } from "../../../common/pagination/Pagination.queries";
 
 export default function BoardList(): JSX.Element {
     const router = useRouter();
