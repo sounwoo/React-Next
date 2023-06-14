@@ -1,8 +1,9 @@
-import { getDate } from '../../util/utiles';
-import * as S from './BoardList.styles';
-import { IBoardListUIProps } from './BoardList.types';
+import Pagination from "../../../common/pagination/Pagination.container";
+import { getDate } from "../../util/utiles";
+import * as S from "./BoardList.styles";
+import { IBoardListUIProps } from "./BoardList.types";
 
-export default function BoardListUI(props: IBoardListUIProps) {
+export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
     return (
         <S.Wrapper>
             <S.TableTop />
@@ -14,8 +15,13 @@ export default function BoardListUI(props: IBoardListUIProps) {
             </S.TableHeader>
             {props.data?.fetchBoards.map((el) => (
                 <S.TableHeader key={el._id}>
-                    <S.ColumnBasic>{el._id.slice(-4).toUpperCase()}</S.ColumnBasic>
-                    <S.ColumnTitle id={el._id} onClick={props.onClickMoveToBoardsDetail}>
+                    <S.ColumnBasic>
+                        {el._id.slice(-4).toUpperCase()}
+                    </S.ColumnBasic>
+                    <S.ColumnTitle
+                        id={el._id}
+                        onClick={props.onClickMoveToBoardsDetail}
+                    >
                         {el.title}
                     </S.ColumnTitle>
                     <S.ColumnBasic>{el.writer}</S.ColumnBasic>
@@ -24,6 +30,7 @@ export default function BoardListUI(props: IBoardListUIProps) {
             ))}
             <S.TableBottom />
             <S.Footer>
+                <Pagination refetch={props.refetch} lastPage={props.lastPage} />
                 <S.Button onClick={props.onClickMoveToBoardsNew}>
                     <S.PencilIcon src="/images/boards/list/write.png" />
                     게시물 작성하기
