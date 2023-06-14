@@ -39,7 +39,7 @@ export default function BoardList(): JSX.Element {
             onClickMoveToBoardsNew={onClickMoveToBoardsNew}
             onClickMoveToBoardsDetail={onClickMoveToBoardsDetail}
             refetch={refetch}
-            lastPage={lastPage}
+            count={dataBoardsCount?.fetchBoardsCount ?? 1}
         />
     );
 }

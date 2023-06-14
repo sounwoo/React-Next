@@ -9,12 +9,14 @@ export interface IPaginationProps {
     refetch: (
         variables?: Partial<IQueryFetchBoardsArgs> | undefined
     ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoards">>>;
-    lastPage: number;
+    count: number;
 }
 
-export interface IPaginationUIProps extends IPaginationProps {
+export interface IPaginationUIProps {
     onClickPage: (event: MouseEvent<HTMLSpanElement>) => void;
     onClickPrevPage: () => void;
     onClickNextPage: () => void;
+    activedPage: number;
     startPage: number;
+    lastPage: number;
 }

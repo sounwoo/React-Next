@@ -11,6 +11,6 @@ export interface IBoardListUIProps {
     refetch: (
         variables?: Partial<IQueryFetchBoardsArgs> | undefined
     ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoards">>>;
-    lastPage: number;
+    count: number;
     data?: Pick<IQuery, "fetchBoards">;
 }

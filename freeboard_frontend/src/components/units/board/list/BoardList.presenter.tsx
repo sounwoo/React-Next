@@ -30,7 +30,7 @@ export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
             ))}
             <S.TableBottom />
             <S.Footer>
-                <Pagination refetch={props.refetch} lastPage={props.lastPage} />
+                <Pagination refetch={props.refetch} count={props.count} />
                 <S.Button onClick={props.onClickMoveToBoardsNew}>
                     <S.PencilIcon src="/images/boards/list/write.png" />
                     게시물 작성하기

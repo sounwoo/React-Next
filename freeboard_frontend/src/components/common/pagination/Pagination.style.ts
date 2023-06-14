@@ -1,5 +1,9 @@
 import styled from "@emotion/styled";
 
+interface IPageProps {
+    isActive?: boolean;
+}
+
 export const Warrper = styled.div`
     display: flex;
     justify-content: center;
@@ -7,16 +11,13 @@ export const Warrper = styled.div`
     width: 100%;
 `;
 
-export const ArrowSpan = styled.span`
-    cursor: pointer;
-    margin: 5px;
-`;
-
-export const pageNumber = styled.span`
+export const Page = styled.span`
     margin: 10px;
     cursor: pointer;
+    color: ${(props: IPageProps) => (props.isActive ? "blue" : "black")};
+    font-weight: ${(props: IPageProps) => (props.isActive ? "bold" : "normal")};
 
     :hover {
-        color: green;
+        color: ${(props: IPageProps) => (props.isActive ? "blue" : "green")};
     }
 `;

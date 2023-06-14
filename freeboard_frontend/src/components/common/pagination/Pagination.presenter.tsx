@@ -4,27 +4,24 @@ import { IPaginationUIProps } from "./Pagination.types";
 export default function PaginationUI(props: IPaginationUIProps): JSX.Element {
     return (
         <S.Warrper>
-            <S.ArrowSpan onClick={props.onClickPrevPage}>{"<"}</S.ArrowSpan>
+            <S.Page onClick={props.onClickPrevPage}>{"<"}</S.Page>
             {new Array(10)
                 .fill(0)
-                .filter((_, index) => {
-                    const temp = index + props.startPage;
-
-                    return temp <= props.lastPage;
-                })
+                .filter((_, index) => index + props.startPage <= props.lastPage)
                 .map((_, index) => {
                     const temp = index + props.startPage;
                     return (
-                        <S.pageNumber
+                        <S.Page
                             key={temp}
                             id={String(temp)}
                             onClick={props.onClickPage}
+                            isActive={temp === props.activedPage}
                         >
                             {temp}
-                        </S.pageNumber>
+                        </S.Page>
                     );
                 })}
-            <S.ArrowSpan onClick={props.onClickNextPage}>{">"}</S.ArrowSpan>
+            <S.Page onClick={props.onClickNextPage}>{">"}</S.Page>
         </S.Warrper>
     );
 }
