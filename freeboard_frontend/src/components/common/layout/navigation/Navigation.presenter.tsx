@@ -21,6 +21,7 @@ export default function NavigationUI(props: INavigationUIProps): JSX.Element {
                                 ? { border: "none" }
                                 : {}
                         }
+                        isActive={props.activePage === el.page}
                     >
                         {el.name}
                     </Menu>

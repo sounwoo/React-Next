@@ -1,5 +1,9 @@
 import styled from "@emotion/styled";
 
+interface INavigationProps {
+    isActive?: boolean;
+}
+
 export const Warpper = styled.div`
     height: 64px;
     display: flex;
@@ -19,9 +23,6 @@ export const Menu = styled.div`
     text-align: center;
     padding-left: 10px;
     padding-right: 10px;
-    color: #ab9000;
-
-    :hover {
-        color: black;
-    }
+    color: ${(props: INavigationProps) =>
+        props.isActive ? "black" : "#ab9000"};
 `;

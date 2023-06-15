@@ -1,13 +1,16 @@
 import { useRouter } from "next/router";
 import NavigatrionUI from "./Navigation.presenter";
-import { MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
 
 export default function Navigation(): JSX.Element {
+    const [activePage, setActivePage] = useState("");
     const router = useRouter();
 
     const onClickMenu = (event: MouseEvent<HTMLDivElement>): void => {
-        void router.push(event.currentTarget.id);
+        const activePage = event.currentTarget.id;
+        setActivePage(activePage);
+        void router.push(activePage);
     };
 
-    return <NavigatrionUI onClickMenu={onClickMenu} />;
+    return <NavigatrionUI onClickMenu={onClickMenu} activePage={activePage} />;
 }

@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const Warpper = styled.div`
     width: 1200px;
     height: 100px;
-    margin-left: 80px;
+    margin-left: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
