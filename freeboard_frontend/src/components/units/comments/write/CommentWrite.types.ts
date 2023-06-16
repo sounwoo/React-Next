@@ -1,13 +1,29 @@
-import { ChangeEvent, MouseEvent } from "react";
+import { ChangeEvent, Dispatch, MouseEvent, SetStateAction } from "react";
+import { IBoardComment } from "../../../../commons/types/generated/types";
 
-export interface CommentWrtieUIProps {
-    onChangeWriter: (event: ChangeEvent<HTMLInputElement>) => void;
-    onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
-    onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+export interface ICommentWriteProps {
+    isOpen?: boolean;
+    setIsOpen?: Dispatch<SetStateAction<boolean>>;
+    el?: IBoardComment;
+}
+
+export interface CommentWrtieUIProps extends ICommentWriteProps {
+    onChangeInputs: (
+        event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    ) => void;
     onClickSubmit: (event: MouseEvent<HTMLButtonElement>) => void;
-    setRating: (value: number) => void;
+    setInputs: Dispatch<
+        SetStateAction<{
+            writer: string;
+            password: string;
+            contents: string;
+        }>
+    >;
+    inputs: {
+        writer?: string;
+        password?: string;
+        contents: string;
+    };
     rating: number;
-    writer: string;
-    password: string;
-    contents: string;
+    setRating: Dispatch<SetStateAction<number>>;
 }

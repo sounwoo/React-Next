@@ -9,13 +9,16 @@ import {
 import { useRouter } from "next/router";
 import { FETCH_BOARD_COMMENTS } from "../list/CommentList.queries";
 import { Modal } from "antd";
+import { ICommentWriteProps } from "./CommentWrite.types";
 
-export default function CommentWrite() {
+export default function CommentWrite(props: ICommentWriteProps): JSX.Element {
     const router = useRouter();
 
-    const [writer, setWriter] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [contents, setContents] = useState<string>("");
+    const [inputs, setInputs] = useState({
+        writer: "",
+        password: "",
+        contents: "",
+    });
     const [rating, setRating] = useState<number>(0);
 
     const [createBoardComment] = useMutation<
@@ -23,34 +26,29 @@ export default function CommentWrite() {
         IMutationCreateBoardCommentArgs
     >(CREATE_BOARD_COMMENT);
 
-    const onChangeWriter = (evnet: ChangeEvent<HTMLInputElement>): void => {
-        setWriter(evnet.target.value);
-    };
-
-    const onChangePassword = (evnet: ChangeEvent<HTMLInputElement>): void => {
-        setPassword(evnet.target.value);
-    };
-
-    const onChangeContents = (
-        evnet: ChangeEvent<HTMLTextAreaElement>
+    const onChangeInputs = (
+        event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
     ): void => {
-        setContents(evnet.target.value);
+        setInputs((prev) => ({
+            ...inputs,
+            [event.target.id]: event.target.value,
+        }));
     };
 
     const onClickSubmit = async () => {
-        if (!writer) return Modal.error({ content: "작성자를 입력해주세요" });
-        if (!password)
+        if (!inputs.writer)
+            return Modal.error({ content: "작성자를 입력해주세요" });
+        if (!inputs.password)
             return Modal.error({ content: "비밀번호를 입력해주세요" });
-        if (!contents) return Modal.error({ content: "내용을 입력해주세요" });
+        if (!inputs.contents)
+            return Modal.error({ content: "내용을 입력해주세요" });
         try {
             if (typeof router.query.boardId !== "string") return <></>;
             await createBoardComment({
                 variables: {
                     boardId: router.query.boardId,
                     createBoardCommentInput: {
-                        writer,
-                        password,
-                        contents,
+                        ...inputs,
                         rating,
                     },
                 },
@@ -62,10 +60,10 @@ export default function CommentWrite() {
                 ],
             });
             Modal.success({ content: "댓글 작성 완료!" });
-            setContents("");
-            setPassword("");
+            inputs.writer = "";
+            inputs.password = "";
+            inputs.contents = "";
             setRating(0);
-            setWriter("");
         } catch (error) {
             if (error instanceof Error) Modal.error({ content: error.message });
         }
@@ -73,15 +71,12 @@ export default function CommentWrite() {
 
     return (
         <CommentWriteUI
-            onChangeWriter={onChangeWriter}
-            onChangePassword={onChangePassword}
-            onChangeContents={onChangeContents}
+            onChangeInputs={onChangeInputs}
             onClickSubmit={onClickSubmit}
-            setRating={setRating}
+            setInputs={setInputs}
             rating={rating}
-            writer={writer}
-            password={password}
-            contents={contents}
+            setRating={setRating}
+            inputs={inputs}
         />
     );
 }
