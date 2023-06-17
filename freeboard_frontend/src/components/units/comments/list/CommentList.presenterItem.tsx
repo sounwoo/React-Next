@@ -1,14 +1,17 @@
 import { Modal } from "antd";
 import { ChangeEvent, useState } from "react";
 import * as S from "./CommentList.styles";
+import { Rate } from "antd";
 import {
     DELETE_BOARD_COMMENT,
     FETCH_BOARD_COMMENTS,
+    UPDATE_BOARD_COMMENT,
 } from "./CommentList.queries";
 import { useMutation } from "@apollo/client";
 import {
     IMutation,
     IMutationDeleteBoardCommentArgs,
+    IMutationUpdateBoardCommentArgs,
 } from "../../../../commons/types/generated/types";
 import { useRouter } from "next/router";
 import { ICommentListItemProps } from "./CommentList.types";
@@ -18,20 +21,30 @@ export default function CommentListItem(
     props: ICommentListItemProps
 ): JSX.Element {
     const router = useRouter();
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
-    const [password, setPassword] = useState("");
+
+    const [inputs, setInputs] = useState({
+        password: "",
+        contents: "",
+    });
+    const [rating, setRating] = useState<number>(0);
 
     const [deleteBoardComment] = useMutation<
         Pick<IMutation, "deleteBoardComment">,
         IMutationDeleteBoardCommentArgs
     >(DELETE_BOARD_COMMENT);
 
+    const [updateBoardComment] = useMutation<
+        Pick<IMutation, "updateBoardComment">,
+        IMutationUpdateBoardCommentArgs
+    >(UPDATE_BOARD_COMMENT);
+
     const onClickCommentDelete = async () => {
         try {
             await deleteBoardComment({
                 variables: {
-                    password,
+                    password: inputs.password,
                     boardCommentId: props.el._id,
                 },
                 refetchQueries: [
@@ -51,13 +64,54 @@ export default function CommentListItem(
         }
     };
 
-    const onIsOpen = (): void => {};
-    const onToggleModal = (): void => {
-        if (isOpen) setIsOpenDeleteModal((prev) => !prev);
+    const onClickCommentEdit = async (): Promise<void> => {
+        try {
+            await updateBoardComment({
+                variables: {
+                    password: inputs.password,
+                    boardCommentId: props.el._id,
+                    updateBoardCommentInput: {
+                        contents: inputs.contents,
+                        rating,
+                    },
+                },
+                refetchQueries: [
+                    {
+                        query: FETCH_BOARD_COMMENTS,
+                        variables: { boardId: router.query.boardId },
+                    },
+                ],
+            });
+            Modal.success({ content: "수정완료!" });
+            setIsOpenDeleteModal((prve) => !prve);
+            setIsOpen((prev) => !prev);
+        } catch (error) {
+            if (error instanceof Error) {
+                Modal.error({ content: error.message });
+                setIsOpenDeleteModal((prve) => !prve);
+            }
+        }
     };
 
-    const onChangePassword = (event: ChangeEvent<HTMLInputElement>): void => {
-        setPassword(event.target.value);
+    const onClickEditButtn = (): void => {
+        setIsOpenDeleteModal(true);
+    };
+
+    const onIsOpen = (): void => {
+        setIsOpen((prev) => !prev);
+    };
+
+    const onToggleModal = (): void => {
+        setIsOpenDeleteModal((prev) => !prev);
+    };
+
+    const onChangeInputs = (
+        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ): void => {
+        setInputs({
+            ...inputs,
+            [event.target.id]: event.target.value,
+        });
     };
 
     return (
@@ -65,13 +119,14 @@ export default function CommentListItem(
             {isOpenDeleteModal && (
                 <S.PasswordModal
                     open={true}
-                    onOk={onClickCommentDelete}
+                    onOk={isOpen ? onClickCommentEdit : onClickCommentDelete}
                     onCancel={onToggleModal}
                 >
                     비밀번호 입력:
                     <S.PasswordInput
                         type="password"
-                        onChange={onChangePassword}
+                        id="password"
+                        onChange={onChangeInputs}
                     />
                 </S.PasswordModal>
             )}
@@ -93,12 +148,41 @@ export default function CommentListItem(
                                 />
                             </S.Option>
                         </S.ItemWarpper>
-                        <S.Comment>{props.el.contents}</S.Comment>
+                        {isOpen ? (
+                            <S.Content
+                                id="contents"
+                                onChange={onChangeInputs}
+                                defaultValue={props.el.contents}
+                            />
+                        ) : (
+                            <S.Comment>{props.el.contents}</S.Comment>
+                        )}
                     </S.Item>
                 </S.Info>
                 <S.Bottom>
-                    <S.CreatedAt>{getDate(props.el.createdAt)}</S.CreatedAt>
-                    <S.Star disabled defaultValue={props.el.rating} />
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "row",
+                            alignItems: "center",
+                        }}
+                    >
+                        <S.CreatedAt>{getDate(props.el.createdAt)}</S.CreatedAt>
+                        {isOpen ? (
+                            <Rate
+                                onChange={setRating}
+                                value={rating}
+                                style={{ marginLeft: "10px" }}
+                            />
+                        ) : (
+                            <S.Star disabled defaultValue={props.el.rating} />
+                        )}
+                    </div>
+                    {isOpen ? (
+                        <S.EditBT onClick={onClickEditButtn}>수정하기</S.EditBT>
+                    ) : (
+                        <></>
+                    )}
                 </S.Bottom>
             </S.Warpper>
         </>

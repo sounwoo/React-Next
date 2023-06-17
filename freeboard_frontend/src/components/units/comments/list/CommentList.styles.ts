@@ -86,6 +86,7 @@ export const Bottom = styled.div`
     height: 40px;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     margin-top: 10px;
     margin-left: 64px;
@@ -97,4 +98,26 @@ export const PasswordInput = styled.input`
     height: 20px;
     margin-top: 20px;
     margin-left: 10px;
+`;
+
+export const EditBT = styled.button`
+    width: 91px;
+    height: 52px;
+    margin-bottom: 10px;
+    background-color: black;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+
+    :hover {
+        background-color: yellow;
+        color: black;
+        border: 1px solid gray;
+        border-radius: 5px;
+    }
+`;
+
+export const Content = styled.textarea`
+    width: 90%;
+    height: 60px;
 `;
