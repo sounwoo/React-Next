@@ -3,7 +3,7 @@ import NavigatrionUI from "./Navigation.presenter";
 import { MouseEvent, useState } from "react";
 
 export default function Navigation(): JSX.Element {
-    const [activePage, setActivePage] = useState("");
+    const [activePage, setActivePage] = useState("/boards");
     const router = useRouter();
 
     const onClickMenu = (event: MouseEvent<HTMLDivElement>): void => {

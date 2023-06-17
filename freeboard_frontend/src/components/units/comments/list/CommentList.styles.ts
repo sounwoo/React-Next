@@ -118,6 +118,16 @@ export const EditBT = styled.button`
 `;
 
 export const Content = styled.textarea`
-    width: 90%;
+    width: 98.8%;
     height: 60px;
+    padding-top: 10px;
+    padding-left: 10px;
+    border: none;
+`;
+
+export const ContentsLength = styled.div`
+    font-size: 13px;
+    border: none;
+    padding-left: 10px;
+    color: #bdbdbd;
 `;

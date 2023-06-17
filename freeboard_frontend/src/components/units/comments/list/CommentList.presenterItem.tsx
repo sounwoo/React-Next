@@ -149,11 +149,25 @@ export default function CommentListItem(
                             </S.Option>
                         </S.ItemWarpper>
                         {isOpen ? (
-                            <S.Content
-                                id="contents"
-                                onChange={onChangeInputs}
-                                defaultValue={props.el.contents}
-                            />
+                            <div
+                                style={{
+                                    border: "1px solid lightgray",
+                                    width: "90%",
+                                }}
+                            >
+                                <S.Content
+                                    id="contents"
+                                    onChange={onChangeInputs}
+                                    maxLength={100}
+                                    defaultValue={props.el.contents}
+                                />
+                                <S.ContentsLength>
+                                    {isOpen
+                                        ? inputs.contents.length
+                                        : props.el.contents.length}
+                                    /100
+                                </S.ContentsLength>
+                            </div>
                         ) : (
                             <S.Comment>{props.el.contents}</S.Comment>
                         )}

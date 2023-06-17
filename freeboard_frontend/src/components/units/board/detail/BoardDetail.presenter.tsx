@@ -65,9 +65,11 @@ export default function BoardDetailUI(props: IBoardDetailUIProps): JSX.Element {
                 </S.LikeWarpper>
             </S.CardWrapper>
             <S.BottomWrapper>
-                <S.Button>목록으로</S.Button>
+                <S.Button onClick={props.onClickBoardListMove}>
+                    목록으로
+                </S.Button>
                 <S.Button onClick={props.onClickMove}>수정하기</S.Button>
-                <S.Button>삭제하기</S.Button>
+                <S.Button onClick={props.onClickDeleteBoard}>삭제하기</S.Button>
             </S.BottomWrapper>
         </S.Wrapper>
     );

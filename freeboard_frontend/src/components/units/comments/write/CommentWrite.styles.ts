@@ -43,7 +43,6 @@ export const Contents = styled.textarea`
     min-height: 108px;
     padding: 20px;
     margin-bottom: -6px;
-
     border: none;
 `;
 
