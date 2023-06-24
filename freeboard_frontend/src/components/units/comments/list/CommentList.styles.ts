@@ -119,7 +119,7 @@ export const EditBT = styled.button`
 
 export const Content = styled.textarea`
     width: 98.8%;
-    height: 60px;
+    height: 40px;
     padding-top: 10px;
     padding-left: 10px;
     border: none;

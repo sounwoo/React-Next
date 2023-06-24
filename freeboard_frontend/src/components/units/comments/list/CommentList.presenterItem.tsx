@@ -94,6 +94,12 @@ export default function CommentListItem(
     };
 
     const onClickEditButtn = (): void => {
+        if (!inputs.contents || !rating) {
+            Modal.error({ content: "변경된 내용이 없습니다." });
+            setIsOpen(false);
+            return;
+        }
+
         setIsOpenDeleteModal(true);
     };
 
@@ -102,6 +108,7 @@ export default function CommentListItem(
     };
 
     const onToggleModal = (): void => {
+        setIsOpen(false);
         setIsOpenDeleteModal((prev) => !prev);
     };
 
@@ -136,7 +143,9 @@ export default function CommentListItem(
                     <S.Avatar src="/images/avatar.png" />
                     <S.Item>
                         <S.ItemWarpper>
-                            <S.Writer>{props.el.writer}</S.Writer>
+                            <S.Writer>
+                                {!isOpen ? props.el.writer : ""}
+                            </S.Writer>
                             <S.Option>
                                 <S.EditButton
                                     src="/images/option/option_edit_icon.png"

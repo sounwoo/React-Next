@@ -20,16 +20,13 @@ export default function CommentList(): JSX.Element {
 
     const onLoadMore = (): void => {
         if (!data) return;
-        console.log(data.fetchBoardComments);
         void fetchMore({
             variables: {
                 page: Math.ceil(data.fetchBoardComments.length / 10) + 1,
             },
             updateQuery: (perv, { fetchMoreResult }) => {
-                console.log(perv, fetchMoreResult);
                 if (fetchMoreResult?.fetchBoardComments === undefined)
                     return { fetchBoardComments: [...perv.fetchBoardComments] };
-
                 return {
                     fetchBoardComments: [
                         ...perv.fetchBoardComments,
