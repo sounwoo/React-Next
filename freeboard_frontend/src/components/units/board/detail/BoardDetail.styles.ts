@@ -57,7 +57,7 @@ export const AvatarWarpper = styled.div`
 
 export const Content = styled.div`
     width: 100%;
-    height: 480px;
+    margin-bottom: 40px;
     font-size: 16px;
     font-weight: 500;
 `;
@@ -110,7 +110,7 @@ export const Youtube = styled.div`
     width: 700px;
     height: 500px;
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 100px;
 `;
 
 export const IconWarpper = styled.div``;
@@ -120,4 +120,10 @@ export const LinkIcon = styled.img``;
 export const LocationIcon = styled.img`
     cursor: pointer;
     margin-left: 20px;
+`;
+
+export const Image = styled.img`
+    width: 996px;
+    height: 480px;
+    margin-bottom: 30px;
 `;

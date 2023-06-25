@@ -16,6 +16,7 @@ export const FETCH_BOARD = gql`
                 addressDetail
                 zipcode
             }
+            images
         }
     }
 `;

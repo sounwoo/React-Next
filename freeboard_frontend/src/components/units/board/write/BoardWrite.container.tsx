@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import BoardWriteUI from "./BoardWrite.presenter";
 import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import { useMutation } from "@apollo/client";
@@ -93,9 +93,13 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     const onChangeFileUrls = (fileUrl: string, index: number): void => {
         const newFileUrls = [...fileUrls];
         newFileUrls[index] = fileUrl;
-        console.log(newFileUrls);
         setFileUrls(newFileUrls);
     };
+
+    useEffect(() => {
+        const images = props.data?.fetchBoard.images;
+        if (images !== undefined && images !== null) setFileUrls([...images]);
+    }, [props.data]);
 
     async function onClickSubmit(): Promise<void> {
         !writer ? setwriterError("이름을 입력해 주세요") : setwriterError("");
@@ -169,8 +173,8 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
             if (address) updateBoardInput.boardAddress.address = address;
             if (addressDetail)
                 updateBoardInput.boardAddress.addressDetail = addressDetail;
-            if (fileUrls) updateBoardInput.images = fileUrls;
         }
+        if (isChangedFiles) updateBoardInput.images = fileUrls;
         try {
             if (typeof router.query.boardId !== "string") {
                 alert("시스템에 문제가 있습니다.");
@@ -183,8 +187,9 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
                     updateBoardInput,
                 },
             });
+            console.log(result);
             Modal.success({ content: "업데이트 완료!" });
-            router.push(`/boards/${result.data?.updateBoard._id}`);
+            void router.push(`/boards/${result.data?.updateBoard._id}`);
         } catch (error) {
             if (error instanceof Error) Modal.error({ content: error.message });
         }

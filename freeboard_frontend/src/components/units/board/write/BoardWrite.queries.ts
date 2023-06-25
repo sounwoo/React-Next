@@ -25,6 +25,7 @@ export const UPDATE_BOARD = gql`
             contents
             createdAt
             updatedAt
+            images
         }
     }
 `;
