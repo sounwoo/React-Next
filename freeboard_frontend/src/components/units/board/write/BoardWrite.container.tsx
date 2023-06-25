@@ -11,7 +11,6 @@ import {
     IUpdateBoardInput,
 } from "../../../../commons/types/generated/types";
 import { Modal } from "antd";
-import DaumPostcodeEmbed from "react-daum-postcode";
 import type { Address } from "react-daum-postcode";
 
 export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
@@ -35,6 +34,8 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     const [contentsError, setContentsError] = useState<string>("");
     const [youtubeError, setYoutubeError] = useState<string>("");
     const [addressError, setAddressError] = useState<string>("");
+
+    const [fileUrls, setFileUrls] = useState<string[]>(["", "", ""]);
 
     const [createBoard] = useMutation<
         Pick<IMutation, "createBoard">,
@@ -79,14 +80,21 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
         setAddressDetail(value);
     }
 
-    const onToggleModal = (): void => {
-        setIsOpen((prev) => !prev);
-    };
-
     const handleComplete = (data: Address): void => {
         setZipcode(data.zonecode);
         setAddress(data.address);
         onToggleModal();
+    };
+
+    const onToggleModal = (): void => {
+        setIsOpen((prev) => !prev);
+    };
+
+    const onChangeFileUrls = (fileUrl: string, index: number): void => {
+        const newFileUrls = [...fileUrls];
+        newFileUrls[index] = fileUrl;
+        console.log(newFileUrls);
+        setFileUrls(newFileUrls);
     };
 
     async function onClickSubmit(): Promise<void> {
@@ -120,6 +128,7 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
                                 address,
                                 addressDetail,
                             },
+                            images: [...fileUrls],
                         },
                     },
                 });
@@ -133,6 +142,10 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
     }
 
     const onClickUpdate = async () => {
+        const currentFiles = JSON.stringify(fileUrls);
+        const defaultFiles = JSON.stringify(props.data?.fetchBoard.images);
+        const isChangedFiles = currentFiles !== defaultFiles;
+
         if (
             !writer &&
             !title &&
@@ -140,7 +153,8 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
             !youtube &&
             !address &&
             !addressDetail &&
-            !zipcode
+            !zipcode &&
+            !isChangedFiles
         )
             return Modal.error({ content: "변경 사항이 없습니다." });
         if (!password)
@@ -155,6 +169,7 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
             if (address) updateBoardInput.boardAddress.address = address;
             if (addressDetail)
                 updateBoardInput.boardAddress.addressDetail = addressDetail;
+            if (fileUrls) updateBoardInput.images = fileUrls;
         }
         try {
             if (typeof router.query.boardId !== "string") {
@@ -199,6 +214,8 @@ export default function BoardWrite(props: IBoardWriteProps): JSX.Element {
             handleComplete={handleComplete}
             address={address}
             zipcode={zipcode}
+            fileUrls={fileUrls}
+            onChangeFileUrls={onChangeFileUrls}
         />
     );
 }

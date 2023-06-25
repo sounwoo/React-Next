@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent } from "react";
+import { ChangeEvent, MouseEvent, RefObject } from "react";
 import { IQuery } from "../../../../commons/types/generated/types";
 import { Address } from "react-daum-postcode";
 
@@ -35,6 +35,8 @@ export interface IBoardWriteUIProps {
     isOpen: boolean;
     address: string;
     zipcode: string;
+    fileUrls: string[];
+    onChangeFileUrls: (fileUrl: string, index: number) => void;
 }
 
 export interface ISubmitButtonProps {

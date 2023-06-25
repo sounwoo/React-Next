@@ -2,6 +2,8 @@ import DaumPostcodeEmbed from "react-daum-postcode";
 import * as s from "./BoardWrite.styles";
 import { IBoardWriteUIProps } from "./BoardWrite.types";
 import { Modal } from "antd";
+import Uploads from "../../../common/uploads/Upload.container";
+import { v4 as uuid } from "uuid";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
     return (
@@ -104,9 +106,16 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
             </s.InputWrapper>
             <s.ImageWrapper>
                 <s.Label>사진 첨부</s.Label>
-                <s.UploadButton>+ Upload</s.UploadButton>
-                <s.UploadButton>+ Upload</s.UploadButton>
-                <s.UploadButton>+ Upload</s.UploadButton>
+                <s.ImageBox>
+                    {props.fileUrls.map((el, index) => (
+                        <Uploads
+                            key={uuid()}
+                            fileUrl={el}
+                            index={index}
+                            onChangeFileUrls={props.onChangeFileUrls}
+                        />
+                    ))}
+                </s.ImageBox>
             </s.ImageWrapper>
             <s.OptionWrapper>
                 <s.Label>메인설정</s.Label>
