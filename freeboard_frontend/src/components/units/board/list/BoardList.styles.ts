@@ -1,5 +1,9 @@
 import styled from "@emotion/styled";
 
+interface ITextTokenProps {
+    isSearch: boolean;
+}
+
 export const Wrapper = styled.div`
     width: 1200px;
     margin: 100px;
@@ -125,4 +129,8 @@ export const SeachDate = styled.input`
     ::placeholder {
         color: #bdbdbd;
     }
+`;
+
+export const TextToken = styled.span`
+    color: ${(props: ITextTokenProps) => (props.isSearch ? "red" : "black")};
 `;

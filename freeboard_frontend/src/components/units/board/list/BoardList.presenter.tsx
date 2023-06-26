@@ -3,6 +3,9 @@ import PaginationUI from "../../../common/pagination/Pagination.presenter";
 import { getDate } from "../../util/utiles";
 import * as S from "./BoardList.styles";
 import { IBoardListUIProps } from "./BoardList.types";
+import { v4 as uuid } from "uuid";
+
+const SECRET = "@#$%";
 
 export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
     return (
@@ -35,7 +38,20 @@ export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
                         id={el._id}
                         onClick={props.onClickMoveToBoardsDetail}
                     >
-                        {el.title}
+                        {el.title
+                            .replaceAll(
+                                props.search,
+                                `${SECRET}${props.search}${SECRET}`
+                            )
+                            .split(SECRET)
+                            .map((el: string) => (
+                                <S.TextToken
+                                    key={uuid()}
+                                    isSearch={props.search === el}
+                                >
+                                    {el}
+                                </S.TextToken>
+                            ))}
                     </S.ColumnTitle>
                     <S.ColumnBasic>{el.writer}</S.ColumnBasic>
                     <S.ColumnBasic>{getDate(el.createdAt)}</S.ColumnBasic>
@@ -43,10 +59,7 @@ export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
             ))}
             <S.TableBottom />
             <S.Footer>
-                <Pagination
-                    refetch={props.refetch}
-                    count={props.count}
-                />
+                <Pagination refetch={props.refetch} count={props.count} />
                 <S.Button onClick={props.onClickMoveToBoardsNew}>
                     <S.PencilIcon src="/images/boards/list/write.png" />
                     게시물 작성하기
