@@ -82,3 +82,47 @@ export const Button = styled.button`
         background-color: #f5f2fc;
     }
 `;
+
+export const SearchWarpper = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
+export const SearchInput = styled.input`
+    background: #f2f2f2;
+    border-radius: 10px;
+    width: 756px;
+    height: 52px;
+    padding-left: 20px;
+    border: 1px solid #bdbdbd;
+    cursor: pointer;
+    ::placeholder {
+        color: black;
+    }
+`;
+
+export const SeachButton = styled.button`
+    color: white;
+    cursor: pointer;
+    background: #000000;
+    border-radius: 10px;
+    width: 94px;
+    height: 56px;
+
+    :hover {
+        background-color: yellow;
+        color: black;
+    }
+`;
+
+export const SeachDate = styled.input`
+    width: 244px;
+    height: 52px;
+    text-align: center;
+    cursor: pointer;
+    background: #ffffff;
+    border: 1px solid #bdbdbd;
+    ::placeholder {
+        color: #bdbdbd;
+    }
+`;

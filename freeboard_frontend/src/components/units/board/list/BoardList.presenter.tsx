@@ -1,4 +1,5 @@
 import Pagination from "../../../common/pagination/Pagination.container";
+import PaginationUI from "../../../common/pagination/Pagination.presenter";
 import { getDate } from "../../util/utiles";
 import * as S from "./BoardList.styles";
 import { IBoardListUIProps } from "./BoardList.types";
@@ -6,6 +7,18 @@ import { IBoardListUIProps } from "./BoardList.types";
 export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
     return (
         <S.Wrapper>
+            <S.SearchWarpper>
+                <S.SearchInput
+                    type="search"
+                    placeholder="🔍 제목을 검색해주세요."
+                    onChange={props.onChangeSearch}
+                    value={props.search}
+                />
+                <S.SeachDate placeholder="YYYY. MM.DD ~ YYYY. MM.DD"></S.SeachDate>
+                <S.SeachButton onClick={props.onClickSearch}>
+                    검색하기
+                </S.SeachButton>
+            </S.SearchWarpper>
             <S.TableTop />
             <S.TableHeader>
                 <S.ColumnHeaderBasic>번호</S.ColumnHeaderBasic>
@@ -30,7 +43,10 @@ export default function BoardListUI(props: IBoardListUIProps): JSX.Element {
             ))}
             <S.TableBottom />
             <S.Footer>
-                <Pagination refetch={props.refetch} count={props.count} />
+                <Pagination
+                    refetch={props.refetch}
+                    count={props.count}
+                />
                 <S.Button onClick={props.onClickMoveToBoardsNew}>
                     <S.PencilIcon src="/images/boards/list/write.png" />
                     게시물 작성하기
