@@ -1,4 +1,4 @@
-import { useMutation, gql } from '@apollo/client';
+import { useMutation, gql } from "@apollo/client";
 
 const CREATE_BOARD = gql`
     mutation {
