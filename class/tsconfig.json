@@ -16,6 +16,12 @@
         "isolatedModules": true,
         "jsx": "preserve"
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/_app.js"],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "pages/_app.js",
+        "pages/section24/24-01-react-hook-form/01-befor.js"
+    ],
     "exclude": ["node_modules"]
 }
