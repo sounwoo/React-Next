@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+  <title>클로저 실습</title>
+  <script>
+    function aaa() {
+      const apple = 10 // closure
+
+      function bbb() { // local
+        const banana = 20
+        console.log(banana)
+        console.log(apple) // 스코프 체이닝 발생
+      }
+      const qqq = 3
+      bbb()
+    }
+    aaa()
+  </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
