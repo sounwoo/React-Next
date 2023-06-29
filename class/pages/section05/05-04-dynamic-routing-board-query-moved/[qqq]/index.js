@@ -1,5 +1,5 @@
-import { gql, useQuery } from '@apollo/client';
-import { useRouter } from 'next/router';
+import { gql, useQuery } from "@apollo/client";
+import { useRouter } from "next/router";
 
 const FETCH_BOARD = gql`
     query fetchBoard($number: Int) {
