@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <title>프리로드</title>
+
+  <!-- 1. 프리로드란? 한 번에 6개씩 받아오므로, body태그의 이미지는 가장 마지막에 다운로드 -->
+  <!-- 눈에 보이는 이미지를 먼저 다운로드 받아서 보여주고, 클릭하면 실행되는 JS는 나중에 받아오기 -->
+  <!-- 전체 모든 파일 총 다운로드 시간은 더 짧아짐 -->
+
+  <!-- 2. 만약, 여기서 프리페치를 한다면? 프리페치는 다음을 위해서 받는 것이므로 마지막에 받음(img로 1번 받고, prefetch로 1번 총 2번 받음) -->
+  <link rel="preload" as="image" href="./favicon.ico" />
+
+  <!-- Disable-cache 체크하고 테스트 -->
+  <link rel="stylesheet" href="./index.css">
+  <script src="./index1.js"></script>
+  <script src="./index2.js"></script>
+  <script src="./index3.js"></script>
+  <script src="./index4.js"></script>
+  <script src="./index5.js"></script>
+  <script src="./index6.js"></script>
+</head>
+
+<body>
+  <img src="./favicon.ico" />
+</body>
+
+</html>
